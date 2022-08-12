@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import axios from "axios";
+import RecipeGallery from './RecipeGallery';
 
 
 class Recipes extends Component {
@@ -10,6 +11,7 @@ class Recipes extends Component {
         return(
             <div>
                 cominig
+            <RecipeGallery />
             </div>
             
             
