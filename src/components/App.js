@@ -1,8 +1,10 @@
+import Recipes from "./Recipes";
+
 
 function App() {
   return (
     <div className="App">
-    Coming soon
+    < Recipes />
     </div>
   );
 }
