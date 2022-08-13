@@ -9,14 +9,7 @@ class Recipes extends Component {
         this.state={
             ingredients:[]
         }
-        this._updateIngredients = this._updateIngredients.bind(this)
-    }
-    _updateIngredients = (event) => {
-        this.setState({ ingredients:event.target.value });
-    }
-    fetchRecipes(q){
-
-    }
+          }
     render(){
         return(
             <div>
