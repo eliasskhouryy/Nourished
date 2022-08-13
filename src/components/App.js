@@ -7,29 +7,14 @@ import Signin from './Signin';
 import { Container } from 'react-bootstrap';
 import Dashboard from './Dashboard';
 import { auth } from '../firebase';
+import Signup from './Signup';
 
 function App() {
-	const [registerEmail, setRegisterEmail] = useState('');
-	const [registerPassword, setRegisterPassword] = useState('');
-
 	const [user, setUser] = useState({});
 
 	onAuthStateChanged(auth, (currentUser) => {
 		setUser(currentUser);
 	});
-
-	const register = async () => {
-		try {
-			const user = await createUserWithEmailAndPassword(auth, registerEmail, registerPassword);
-			console.log(user);
-		} catch (error) {
-			console.log(error.message);
-		}
-	};
-
-	const logout = async () => {
-		await signOut(auth);
-	};
 
 	return (
 		<div>
@@ -39,6 +24,7 @@ function App() {
 						{/* <AuthProvider> */}
 						<Routes>
 							<Route path="/signin" element={<Signin />} />
+							<Route path="/signup" element={<Signup />} />
 							<Route exact path="/" element={<App />} />
 							<Route path="/dashboard" element={<Dashboard />} />
 							<Route path="/recipes" element={<Recipes />} />
@@ -49,23 +35,6 @@ function App() {
 					{/* <Recipes /> */}
 				</div>
 			</Container>
-			<div>
-				<h3> Register User </h3>
-				<input
-					placeholder="Email..."
-					onChange={(e) => {
-						setRegisterEmail(e.target.value);
-					}}
-				/>
-				<input
-					placeholder="Password..."
-					onChange={(event) => {
-						setRegisterPassword(event.target.value);
-					}}
-				/>
-
-				<button onClick={register}> Create User</button>
-			</div>
 		</div>
 	);
 }

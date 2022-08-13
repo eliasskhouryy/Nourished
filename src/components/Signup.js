@@ -5,15 +5,13 @@ import Dashboard from './Dashboard';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth } from '../firebase';
 
-export default function Signin() {
-	const [loginEmail, setLoginEmail] = useState('');
-	const [loginPassword, setLoginPassword] = useState('');
+export default function Signup() {
+	const [registerEmail, setRegisterEmail] = useState('');
+	const [registerPassword, setRegisterPassword] = useState('');
 
-	const login = async () => {
+	const register = async () => {
 		try {
-			const user = await signInWithEmailAndPassword(auth, loginEmail, loginPassword);
-			// Navigate('/dashboard');
-
+			const user = await createUserWithEmailAndPassword(auth, registerEmail, registerPassword);
 			console.log(user);
 		} catch (error) {
 			console.log(error.message);
@@ -22,22 +20,22 @@ export default function Signin() {
 	return (
 		<div>
 			<div>
-				<h3> Login </h3>
+				<h3> Register User </h3>
 				<input
 					placeholder="Email..."
-					onChange={(event) => {
-						setLoginEmail(event.target.value);
+					onChange={(e) => {
+						setRegisterEmail(e.target.value);
 					}}
 				/>
 				<input
 					placeholder="Password..."
 					type="password"
 					onChange={(event) => {
-						setLoginPassword(event.target.value);
+						setRegisterPassword(event.target.value);
 					}}
 				/>
 
-				<button onClick={login}> Login</button>
+				<button onClick={register}> Create User</button>
 			</div>
 		</div>
 	);
