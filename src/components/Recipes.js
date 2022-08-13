@@ -2,7 +2,6 @@ import React, {Component} from "react";
 import SearchForm from "./SearchForm";
 import axios from "axios";
 import RecipeGallery from './RecipeGallery';
-import TestForm from './TestForm';
 
 
 class Recipes extends Component {
