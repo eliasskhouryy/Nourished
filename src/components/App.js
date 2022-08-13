@@ -1,62 +1,72 @@
-import React, { useContext } from 'react';
-import { Container } from 'react-bootstrap';
-import Signup from './Signup';
-import { AuthContext } from '../contexts/AuthContext';
+import { useState } from 'react';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from 'firebase/auth';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import Login from './Login';
-import PrivateRoute from './PrivateRoute';
+import Signin from './Signin';
+import { Container } from 'react-bootstrap';
 import Dashboard from './Dashboard';
-import { getAuth } from 'firebase/auth';
+
+// import './App.css';
+import { auth } from '../firebase';
 
 function App() {
-	const { currentUser } = getAuth();
+	const [registerEmail, setRegisterEmail] = useState('');
+	const [registerPassword, setRegisterPassword] = useState('');
 
-	const RequireAuth = ({ children }) => {
-		return currentUser ? children : <Navigate to="/login" />;
+	const [user, setUser] = useState({});
+
+	onAuthStateChanged(auth, (currentUser) => {
+		setUser(currentUser);
+	});
+
+	const register = async () => {
+		try {
+			const user = await createUserWithEmailAndPassword(auth, registerEmail, registerPassword);
+			console.log(user);
+		} catch (error) {
+			console.log(error.message);
+		}
 	};
 
-	// function LoggedIn() {
-	// 	return currentUser ? <Navigate exact to="/" /> : <Navigate to="/login" />;
-	// }
-
-	console.log(currentUser);
+	const logout = async () => {
+		await signOut(auth);
+	};
 
 	return (
-		<Container className="d-flex align-items-center justify-content-center" style={{ minHeight: '100vh' }}>
-			<div className="w-100" style={{ maxWidth: '400px' }}>
-				<Router>
-					{/* <AuthProvider> */}
-					<Routes>
-						<Route
-							path="/login"
-							element={
-								// <LoggedIn>
-								<Login />
-								// </LoggedIn>
-							}
-						/>
-						<Route
-							path="/signup"
-							element={
-								// <LoggedIn>
-								<Signup />
-								// </LoggedIn>
-							}
-						/>
-						<Route
-							index
-							element={
-								<RequireAuth>
-									<Dashboard />
-								</RequireAuth>
-							}
-						/>
-					</Routes>
-					{/* </AuthProvider> */}
-				</Router>
-				{/* <Recipes /> */}
+		<div>
+			<Container className="d-flex align-items-center justify-content-center" style={{ minHeight: '100vh' }}>
+				<div className="w-100" style={{ maxWidth: '400px' }}>
+					<Router>
+						{/* <AuthProvider> */}
+						<Routes>
+							<Route path="/signin" element={<Signin />} />
+							<Route exact path="/" element={<App />} />
+							<Route path="/dashboard" element={<Dashboard />} />
+							{/* <Route path="/signup" element={<Signup />} /> */}
+						</Routes>
+						{/* </AuthProvider> */}
+					</Router>
+					{/* <Recipes /> */}
+				</div>
+			</Container>
+			<div>
+				<h3> Register User </h3>
+				<input
+					placeholder="Email..."
+					onChange={(e) => {
+						setRegisterEmail(e.target.value);
+					}}
+				/>
+				<input
+					placeholder="Password..."
+					onChange={(event) => {
+						setRegisterPassword(event.target.value);
+					}}
+				/>
+
+				<button onClick={register}> Create User</button>
 			</div>
-		</Container>
+		</div>
 	);
 }
+
 export default App;
