@@ -1,11 +1,11 @@
+import Recipes from './Recipes';
+import axios from 'axios';
 import { useState } from 'react';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from 'firebase/auth';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Signin from './Signin';
 import { Container } from 'react-bootstrap';
 import Dashboard from './Dashboard';
-
-// import './App.css';
 import { auth } from '../firebase';
 
 function App() {
@@ -41,6 +41,7 @@ function App() {
 							<Route path="/signin" element={<Signin />} />
 							<Route exact path="/" element={<App />} />
 							<Route path="/dashboard" element={<Dashboard />} />
+							<Route path="/recipes" element={<Recipes />} />
 							{/* <Route path="/signup" element={<Signup />} /> */}
 						</Routes>
 						{/* </AuthProvider> */}
