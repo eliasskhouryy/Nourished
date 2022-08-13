@@ -3,17 +3,12 @@ import React from 'react';
 const RecipeGallery = (props) => {
     return(
         <div>
-            <img src = {props.RecipesGallery}></img>
+            {props.RecipesGallery}
         </div>
     );
 };
 
 export default RecipeGallery;
-
-
-
-
-
 
 // import React, {Component , useState } from "react";
 // import axios from "axios";

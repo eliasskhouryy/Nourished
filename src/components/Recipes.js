@@ -15,18 +15,16 @@ class Recipes extends Component {
             ingredients:[],
             RecipesGallery: []
         }
-          }
-
+        }
+        
         fetchRecipes = (q)  => {
+            console.log(value)
             const YOUR_APP_ID= `ed915139`
             const YOUR_APP_KEY= `0fd96fbce44449366d6bb13f75f9d475`
             const [value, setValue] = useState('');
             const [list,setList] = useState('alcohol-free')
             const SERVER_URL = `https://api.edamam.com/search?q=${value}&app_id=${YOUR_APP_ID}&app_key=${YOUR_APP_KEY}&&health=${list}`;
-            const ApiParams ={
-                search: q,
-            };
-            axios(SERVER_URL,{ params: ApiParams }).then((response) =>{
+            axios(SERVER_URL).then((response) =>{
                 const RecipesGallery = response.data.hits[0].recipe.image;
                 this.setState({RecipesGallery: RecipesGallery})
             }); 
@@ -38,8 +36,6 @@ class Recipes extends Component {
                 < SearchForm onInput ={this._updateIngredients} onSubmit={ this.fetchRecipes } />
                 <RecipeGallery RecipesGallery = {this.state.RecipesGallery}  />
             </div>
-            
-            
         )
     }
 }
