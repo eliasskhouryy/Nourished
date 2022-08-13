@@ -3,83 +3,107 @@ import axios from "axios";
 import { render } from "@testing-library/react";
 import Recipes from "./Recipes";
 
-const SERVER_URL = 'http://localhost:3000/flights.json';
+
 
 class SearchForm extends Component{
     constructor(){
         super();
         this.state = {
            ingredients: [],
-           UsersIngredients:['Chicken', "melon"],
+           UsersIngredients:[],
            Recipes:[],
            filtertRecipies: []
-
         }
 
         this._updateIngredients = this._updateIngredients.bind(this)
     }
 
-    _updateIngredients = (event) => {
-        this.setState({ UsersIngredients:event.target.value });
+    _updateIngredients = (value) => {
+        this.setState({ UsersIngredients: [...this.state.UsersIngredients,value] });
     };
-  
 
-    
-    // fetchIngredients = ()  => {
-    //     axios(SERVER_URL).then((response) =>{
-    //             this.setState({ingredients: response.data})
+   
+    fetchIngredients = ()  => {
+        
+        const YOUR_APP_ID= `ed915139`
+        const YOUR_APP_KEY= `0fd96fbce44449366d6bb13f75f9d475`
+        const [value, setValue] = useState('');
+        const [list,setList] = useState('alcohol-free')
+        const SERVER_URL = `https://api.edamam.com/search?q=${value}&app_id=${YOUR_APP_ID}&app_key=${YOUR_APP_KEY}&&health=${list}`;
 
-    //             const filter = response.data.filter(ingredients => {
-    //             return ingredients.ADDCONECTION(JSON) == this.state.ingredients
-    //             });
-    //             console.log(filter)
-    //             this.setState({
-    //                 filtertRecipies: filter
-    //             });
-    //     }); 
-    // }
-    
+        axios(SERVER_URL).then((response) =>{
+                this.setState({Recipes: response.hits.recipe.label})
+                console.log(response)
+
+                // const filter = response.data.filter(Recipe => {
+                // return ingredients.ADDCONECTION(JSON) == this.state.ingredients
+                // });
+                // console.log(filter)
+                // this.setState({
+                //     filtertRecipies: filter
+                // });
+        }); 
+    }
+
     render() {
         return(
             <div>
                 <h1>Add ingredients</h1>
-                <SearchFormIngredients _updateIngredients={this._updateIngredients}  onSubmit={this.fetchIngredients}/>
+                <SearchFormIngredients _updateIngredients={this._updateIngredients}  onSubmit={this._updateIngredients}/>
                 < DisplayIngredients UsersIngredients={this.state.UsersIngredients}/> 
+
             </div>
         );
     }
+    
 }
 
 const SearchFormIngredients = (props) => {
     const [value, setValue] = useState('');
+    const [rcp,setRcp] = useState([])
+    const [list,setList] = useState('alcohol-free')
+    
+    const YOUR_APP_ID= `ed915139`
+    const YOUR_APP_KEY= `0fd96fbce44449366d6bb13f75f9d475`
 
-    const _handleInput = (e) =>{
-        setValue(e.target.value)
+    const SERVER_URL = `https://api.edamam.com/search?q=${value}&app_id=${YOUR_APP_ID}&app_key=${YOUR_APP_KEY}&&health=${list}`;
+
+
+    const _handleInput = (event) =>{
+        setValue(event.target.value)
     };
 
-    const _handleSubmit = (e) => {
-        e.preventDefault();
-        props.onSubmit(value);
-        setValue('');  
+    async function getRec (){
+    const result = await axios.get(SERVER_URL)
+    setRcp(result.data.hits)
+    console.log(result.data)
     }
 
-    return(
+    const _handleSubmit = (event) => {
+            event.preventDefault();
+            props.onSubmit(value);
+            setValue('');  
+            getRec()
+        }
+
+        return(
         <form onSubmit ={ _handleSubmit }>
-            <input type="search" required placeholder="Add your ingredients" onSubmit={_handleInput} />
+            <input type="search" required placeholder="Add your ingredients" value={value} onChange={e => setValue(e.target.value)} />
             <input type="submit" value="Add Ingredient" />
         </form>
     );
 }
 
 const DisplayIngredients = (props) => {
-
-
+    
     return(
         <div>
-            {/* <p>{props.UsersIngredients.length}</p> */}
-            {props.UsersIngredients.map((s) => <p key={s.toString()}>{s.UsersIngredients}</p>)}
+            <p>{props.UsersIngredients.length}</p>
+            {props.UsersIngredients.map((s) => <p key={s.toString()}>{s}</p>)}
         </div>
     )
 }
+
+
 
 export default SearchForm;
