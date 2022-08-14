@@ -1,8 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import 'tachyons'
 import './index.css';
 import App from './components/App';
 import reportWebVitals from './reportWebVitals';
+import Recipes from './components/Recipes';
+import RecipeGallery from './components/RecipeGallery';
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

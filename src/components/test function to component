@@ -1,8 +1,3 @@
-import { render } from "@testing-library/react";
-import React, {Component, useEffect,useState} from "react";
-import RecipeGallery from './RecipeGallery';
-import axios from "axios";
-
 export default function Recipes () {
     let obj1;
     let obj2;
@@ -16,11 +11,9 @@ export default function Recipes () {
 	const [search, setSearch] = useState('');
 	const [query, setQuery] = useState('');
 console.log(recipes)
-
 	useEffect(() => {
 		getRecipes();
 	}, [query]);
-    
 
 
 	const getRecipes = async () => {
@@ -30,15 +23,14 @@ console.log(recipes)
             (await fetch(`https://api.edamam.com/search?q=beef&app_id=${YOUR_APP_ID}&app_key=${YOUR_APP_KEY}`)).json()
         ]) 
         .then((response) => {
-            const obj1 = response[0].hits
-            const obj2 = response[1].hits
-            const obj3 = response[2].hits
-            setRecipes(obj1)
-            setRecipes1(obj2)
-            setRecipes2(obj3)
+            obj1 = response[0].hits
+            obj2 = response[1].hits
+            obj3 = response[2].hits
         })
 
-        
+        setRecipes(obj1)
+        setRecipes1(obj2)
+        setRecipes2(obj3)
 	};
 
 	const updateSearch = (e) => {
@@ -59,17 +51,15 @@ console.log(recipes)
             ))}
             </div>
             <div>
-             {recipes1.map((recipe,index) => (
-                <RecipeGallery key={index} title={recipe.recipe.label} calories={recipe.recipe.calories} image={recipe.recipe.image} link={recipe.recipe.url}  />
+             {recipes1.map((recipe1,index) => (
+                <RecipeGallery key={index} title1={recipe1.recipe.label} calories1={recipe1.recipe.calories} image1={recipe1.recipe.image} link1={recipe1.recipe.url}  />
             ))}
             </div>
             <div>
-             {recipes2.map((recipe,index) => (
-                <RecipeGallery key={index} title={recipe.recipe.label} calories={recipe.recipe.calories} image={recipe.recipe.image} link={recipe.recipe.url}  />
+             {recipes2.map((recipe2,index) => (
+                <RecipeGallery key={index} title2={recipe2.recipe.label} calories2={recipe2.recipe.calories} image2={recipe2.recipe.image} link2={recipe2.recipe.url}  />
             ))}
             </div>
 		</div>
 	);
 }
-
-
