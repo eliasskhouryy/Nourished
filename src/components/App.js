@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from 'firebase/auth';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Signin from './Signin';
+import { Container } from 'react-bootstrap';
 import Dashboard from './Dashboard';
 import { auth } from '../firebase';
 import Signup from './Signup';
