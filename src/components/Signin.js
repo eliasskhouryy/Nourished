@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import Dashboard from './Dashboard';
-
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth } from '../firebase';
+
+import { Container, Form, Button, Card, Alert } from 'react-bootstrap';
 
 export default function Signin() {
 	const [loginEmail, setLoginEmail] = useState('');
@@ -12,7 +12,7 @@ export default function Signin() {
 	const login = async () => {
 		try {
 			const user = await signInWithEmailAndPassword(auth, loginEmail, loginPassword);
-			// Navigate('/dashboard');
+			Navigate('/dashboard');
 
 			console.log(user);
 		} catch (error) {
@@ -20,25 +20,35 @@ export default function Signin() {
 		}
 	};
 	return (
-		<div>
-			<div>
-				<h3> Login </h3>
-				<input
-					placeholder="Email..."
-					onChange={(event) => {
-						setLoginEmail(event.target.value);
-					}}
-				/>
-				<input
-					placeholder="Password..."
-					type="password"
-					onChange={(event) => {
-						setLoginPassword(event.target.value);
-					}}
-				/>
+		<Card>
+			<Card.Body>
+				<Form>
+					<h2 className="text-center mb-4"> Login </h2>
+					<Form.Group id="email">
+						<Form.Control
+							placeholder="Email..."
+							onChange={(event) => {
+								setLoginEmail(event.target.value);
+							}}
+						/>
+					</Form.Group>
 
-				<button onClick={login}> Login</button>
-			</div>
-		</div>
+					<Form.Group>
+						<Form.Control
+							placeholder="Password..."
+							type="password"
+							onChange={(event) => {
+								setLoginPassword(event.target.value);
+							}}
+						/>
+					</Form.Group>
+
+					<Button className="w-100" onClick={login}>
+						{' '}
+						Login
+					</Button>
+				</Form>
+			</Card.Body>
+		</Card>
 	);
 }

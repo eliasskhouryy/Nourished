@@ -4,10 +4,11 @@ import { useState } from 'react';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from 'firebase/auth';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Signin from './Signin';
-import { Container } from 'react-bootstrap';
 import Dashboard from './Dashboard';
 import { auth } from '../firebase';
 import Signup from './Signup';
+import Recipes2 from './Recipes2/Recipes2';
+import Profile from './Profile';
 
 function App() {
 	const [user, setUser] = useState({});
@@ -16,25 +17,56 @@ function App() {
 		setUser(currentUser);
 	});
 
+	const ProtectedRoute = ({ user, children }) => {
+		if (!user) {
+			return <Navigate to="/signin" replace />;
+		}
+		return children;
+	};
+	const SignedOut = ({ user, children }) => {
+		if (user) {
+			return <Navigate to="/dashboard" replace />;
+		}
+		return children;
+	};
+
 	return (
 		<div>
-			<Container className="d-flex align-items-center justify-content-center" style={{ minHeight: '100vh' }}>
-				<div className="w-100" style={{ maxWidth: '400px' }}>
-					<Router>
-						{/* <AuthProvider> */}
-						<Routes>
-							<Route path="/signin" element={<Signin />} />
-							<Route path="/signup" element={<Signup />} />
-							<Route exact path="/" element={<App />} />
-							<Route path="/dashboard" element={<Dashboard />} />
-							<Route path="/recipes" element={<Recipes />} />
-							{/* <Route path="/signup" element={<Signup />} /> */}
-						</Routes>
-						{/* </AuthProvider> */}
-					</Router>
-					{/* <Recipes /> */}
-				</div>
-			</Container>
+			<div>
+				<Router>
+					<Routes>
+						<Route
+							path="/signin"
+							element={
+								// <SignedOut user={user}>
+								<Signin />
+								// </SignedOut>
+							}
+						/>
+						<Route
+							path="/signup"
+							element={
+								<SignedOut user={user}>
+									<Signup />
+								</SignedOut>
+							}
+						/>
+						<Route exact path="/" element={<App />} />
+						<Route path="/dashboard" element={<Dashboard />} />
+						<Route path="/recipes" element={<Recipes />} />
+						<Route path="/recipes2" element={<Recipes2 />} />
+
+						<Route
+							path="/profile"
+							element={
+								<ProtectedRoute user={user}>
+									<Profile />
+								</ProtectedRoute>
+							}
+						/>
+					</Routes>
+				</Router>
+			</div>
 		</div>
 	);
 }
