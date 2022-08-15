@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import RecipeDefaultShow from './RecipeDefaultShow';
 import '../recipe.css';
 import { Link } from 'react-router-dom';
-import Search from './Search'
+import Search from './Search';
 
 export default function Recipes2() {
 	const YOUR_APP_ID = `2cb4a854`;
@@ -43,7 +43,7 @@ export default function Recipes2() {
 
 	return (
 		<div>
-			< Search /> 
+			<Search />
 			<h1>{'Asian'}</h1>
 			<div className="contain">
 				{recipes.map((recipe) => (

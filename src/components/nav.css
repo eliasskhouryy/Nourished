@@ -1,0 +1,15 @@
+nav {
+	display: flex;
+	justify-content: space-between;
+	box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+	padding: 10px 15px;
+}
+
+nav .navLeft {
+	margin-top: auto;
+	margin-bottom: auto;
+}
+nav .navRight {
+	margin-top: auto;
+	margin-bottom: auto;
+}
