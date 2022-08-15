@@ -1,4 +1,3 @@
-import Recipes from './Recipes';
 import axios from 'axios';
 import { useState } from 'react';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from 'firebase/auth';
