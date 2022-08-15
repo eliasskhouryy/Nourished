@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import RecipeDefaultShow from './RecipeDefaultShow';
 import '../recipe.css';
 import { Link } from 'react-router-dom';
+import Search from './Search'
 
 export default function Recipes2() {
 	const YOUR_APP_ID = `2cb4a854`;
@@ -18,13 +19,13 @@ export default function Recipes2() {
 	}, [query]);
 
 	const getRecipes = async () => {
-		const response = await fetch(`https://api.edamam.com/search?q=${'chicken'}&app_id=${YOUR_APP_ID}&app_key=${YOUR_APP_KEY}`);
+		const response = await fetch(`https://api.edamam.com/search?q=${'asian'}&app_id=${YOUR_APP_ID}&app_key=${YOUR_APP_KEY}`);
 		const data = await response.json();
 		setRecipes(data.hits);
 		console.log(data.hits);
 	};
 	const getRecipes1 = async () => {
-		const response = await fetch(`https://api.edamam.com/search?q=${'egg'}&app_id=${YOUR_APP_ID}&app_key=${YOUR_APP_KEY}`);
+		const response = await fetch(`https://api.edamam.com/search?q=${'vegan'}&app_id=${YOUR_APP_ID}&app_key=${YOUR_APP_KEY}`);
 		const data = await response.json();
 		setRecipes1(data.hits);
 		console.log(data.hits);
@@ -42,18 +43,17 @@ export default function Recipes2() {
 
 	return (
 		<div>
-			<h1>Nourished</h1>
-			Want to find your own? <Link to="/search">Press here to search</Link>
-			<h1>{'Chicken'}</h1>
+			< Search /> 
+			<h1>{'Asian'}</h1>
 			<div className="contain">
 				{recipes.map((recipe) => (
-					<RecipeDefaultShow key={recipe.recipe.label} title={recipe.recipe.label} calories={parseInt(recipe.recipe.calories)} image={recipe.recipe.image} ingredients={recipe.recipe.ingredients} />
+					<RecipeDefaultShow key={recipe.recipe.label} title={recipe.recipe.label} calories={parseInt(recipe.recipe.calories)} image={recipe.recipe.image} link={recipe.recipe.url} />
 				))}
 			</div>
-			<h1>{'Egg'}</h1>
+			<h1>{'Vegan'}</h1>
 			<div className="contain">
 				{recipes1.map((recipe) => (
-					<RecipeDefaultShow key={recipe.recipe.label} title={recipe.recipe.label} calories={parseInt(recipe.recipe.calories)} image={recipe.recipe.image} ingredients={recipe.recipe.ingredients} />
+					<RecipeDefaultShow key={recipe.recipe.label} title={recipe.recipe.label} calories={parseInt(recipe.recipe.calories)} image={recipe.recipe.image} link={recipe.recipe.url} />
 				))}
 			</div>
 		</div>
