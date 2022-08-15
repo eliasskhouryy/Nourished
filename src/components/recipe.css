@@ -5,6 +5,7 @@ body {
 	text-align: center;
 	overflow-x: scroll;
 	font-family: 'Poppins', sans-serif;
+	background-color: ;
 }
 
 .contain {
@@ -43,24 +44,40 @@ body {
 	width: 250px;
 }
 
-form input {
-	padding: 10px;
-	border: 0.5px solid;
+.mainSearch {
+	display: inline-block;
+	margin-top: 20px;
+}
+
+.mainSearch .searchBar {
+	padding: 12px;
+	border: 0;
 	border-radius: 5px;
 	margin: 5px;
 	background-color: rgb(250, 247, 243);
+	width: 400px;
+	max-width: 400px;
 }
 
-form button {
-	padding: 8px 14px;
-	background-color: blue;
+.mainSearch .button {
+	padding: 12px 16px;
+	background-color: #f73f52;
 	color: white;
+	border: 0;
 	border-radius: 5px;
+}
+.mainSearch .filterButton {
+	padding: 10px 18px;
+	background-color: #f73f52;
+	color: white;
+	border: 0;
+	border-radius: 5px;
+	margin-top: 15px;
 }
 
 .display_Ingredients {
 	vertical-align: middle;
-	background-color: rgb(85, 66, 230);
+	background-color: #3faef7;
 	color: white;
 	height: 300px;
 	margin-top: 5px;
