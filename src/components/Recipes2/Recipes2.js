@@ -3,6 +3,7 @@ import RecipeDefaultShow from './RecipeDefaultShow';
 import '../recipe.css';
 import { Link } from 'react-router-dom';
 import Search from './Search'
+import AddIngredients from './AddIngredients';
 
 export default function Recipes2() {
 	const YOUR_APP_ID = `2cb4a854`;
@@ -19,7 +20,7 @@ export default function Recipes2() {
 	}, [query]);
 
 	const getRecipes = async () => {
-		const response = await fetch(`https://api.edamam.com/search?q=${'asian'}&app_id=${YOUR_APP_ID}&app_key=${YOUR_APP_KEY}`);
+		const response = await fetch(`https://api.edamam.com/search?q=${'chicken,eggs,carrot,garlic'}&app_id=${YOUR_APP_ID}&app_key=${YOUR_APP_KEY}`);
 		const data = await response.json();
 		setRecipes(data.hits);
 		console.log(data.hits);
@@ -43,7 +44,7 @@ export default function Recipes2() {
 
 	return (
 		<div>
-			< Search /> 
+			< AddIngredients /> 
 			<h1>{'Asian'}</h1>
 			<div className="contain">
 				{recipes.map((recipe) => (
