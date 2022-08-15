@@ -41,7 +41,7 @@ function App() {
 									</ProtectedRoute>
 								}
 							/>
-							<Route exact path="/" element={<Login />} />
+							<Route exact path="/" element={<Recipes2 />} />
 							<Route path="/signup" element={<Signup />} />
 							<Route path="/recipes2" element={<Recipes2 />} />
 							<Route path="/search" element={<Search />} />

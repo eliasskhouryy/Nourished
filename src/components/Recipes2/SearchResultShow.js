@@ -1,7 +1,7 @@
 import React from 'react';
 import '../recipe.css';
 
-export default function Recipe1({ title, calories, image, ingredients }) {
+export default function SearchResultShow({ title, calories, image, ingredients }) {
 	return (
 		<div className="box">
 			<h2>{title}</h2>

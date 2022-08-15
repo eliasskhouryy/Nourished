@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import Recipe1 from './Recipe1';
+import SearchResultShow from './SearchResultShow';
 import '../recipe.css';
 
 export default function Recipes2() {
@@ -44,7 +44,7 @@ export default function Recipes2() {
 			<h1>{query}</h1>
 			<div className="contain">
 				{recipes.map((recipe) => (
-					<Recipe1 key={recipe.recipe.label} title={recipe.recipe.label} calories={parseInt(recipe.recipe.calories)} image={recipe.recipe.image} ingredients={recipe.recipe.ingredients} />
+					<SearchResultShow key={recipe.recipe.label} title={recipe.recipe.label} calories={parseInt(recipe.recipe.calories)} image={recipe.recipe.image} ingredients={recipe.recipe.ingredients} />
 				))}
 			</div>
 		</div>
