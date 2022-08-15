@@ -1,9 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import SearchResultShow from './SearchResultShow';
 import '../recipe.css';
+import { useUserAuth } from '../../context/UserAuthContext';
+import Home from '../Authentication/Home';
 
 export default function Recipes2() {
+	const { logOut, user } = useUserAuth();
+	const navigate = useNavigate();
+
+	const handleLogout = async () => {
+		try {
+			await logOut();
+			navigate('/');
+		} catch (error) {
+			console.log(error.message);
+		}
+	};
 	const YOUR_APP_ID = `2cb4a854`;
 	const YOUR_APP_KEY = `68c5e9abaabd7cda76ac6d01c1c7a90f`;
 
@@ -34,6 +47,8 @@ export default function Recipes2() {
 
 	return (
 		<div>
+			<Home />
+
 			<h1>Nourished</h1>
 			<form onSubmit={getSearch} className="search-form">
 				<input className="search-bar" type="text" value={search} onChange={updateSearch} />
@@ -44,7 +59,13 @@ export default function Recipes2() {
 			<h1>{query}</h1>
 			<div className="contain">
 				{recipes.map((recipe) => (
-					<SearchResultShow key={recipe.recipe.label} title={recipe.recipe.label} calories={parseInt(recipe.recipe.calories)} image={recipe.recipe.image} ingredients={recipe.recipe.ingredients} />
+					<SearchResultShow
+						key={recipe.recipe.label}
+						title={recipe.recipe.label}
+						calories={parseInt(recipe.recipe.calories)}
+						image={recipe.recipe.image}
+						ingredients={recipe.recipe.ingredients}
+					/>
 				))}
 			</div>
 		</div>

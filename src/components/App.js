@@ -14,19 +14,6 @@ import ProtectedRoute from './Authentication/ProtectedRoute';
 import { UserAuthContextProvider } from '../context/UserAuthContext';
 
 function App() {
-	const [user, setUser] = useState({});
-
-	onAuthStateChanged(auth, (currentUser) => {
-		setUser(currentUser);
-	});
-
-	const ProtectedRoute = ({ user, children }) => {
-		if (!user) {
-			return <Navigate to="/signin" replace />;
-		}
-		return children;
-	};
-
 	return (
 		<div>
 			<div>
@@ -45,6 +32,7 @@ function App() {
 							<Route path="/signup" element={<Signup />} />
 							<Route path="/recipes2" element={<Recipes2 />} />
 							<Route path="/search" element={<Search />} />
+							<Route path="/login" element={<Login />} />
 						</Routes>
 					</UserAuthContextProvider>
 				</Router>

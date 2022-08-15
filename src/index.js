@@ -10,7 +10,7 @@ root.render(
 	<React.StrictMode>
 		<div>
 			
-			<h1>Nourished</h1>
+			
 		{/* <AuthContextProvider> */}
 		<App />
 		{/* </AuthContextProvider> */}

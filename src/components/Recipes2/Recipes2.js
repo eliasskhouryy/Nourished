@@ -4,6 +4,7 @@ import '../recipe.css';
 import { Link } from 'react-router-dom';
 import Search from './Search'
 import AddIngredients from './AddIngredients';
+import Home from '../Authentication/Home';
 
 export default function Recipes2() {
 	const YOUR_APP_ID = `2cb4a854`;
@@ -44,6 +45,7 @@ export default function Recipes2() {
 
 	return (
 		<div>
+			< Home />
 			< AddIngredients /> 
 			<h1>{'Asian'}</h1>
 			<div className="contain">
