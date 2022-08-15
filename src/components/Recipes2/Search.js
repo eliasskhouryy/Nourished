@@ -21,7 +21,7 @@ export default function Recipes2() {
 	const YOUR_APP_KEY = `68c5e9abaabd7cda76ac6d01c1c7a90f`;
 
 	const [recipes, setRecipes] = useState([]);
-	const [search, setSearch] = useState('');
+	const [search, setSearch] = useState();
 	const [query, setQuery] = useState('');
 
 	useEffect(() => {

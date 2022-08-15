@@ -9,7 +9,18 @@ nav .navLeft {
 	margin-top: auto;
 	margin-bottom: auto;
 }
-nav .navRight {
+nav .navRight,
+nav .user {
+	display: inline-block;
+	margin-top: auto;
+	margin-bottom: auto;
+}
+
+nav img {
+	width: 200px;
+	height: 50px;
+	object-fit: cover;
+	display: inline-block;
 	margin-top: auto;
 	margin-bottom: auto;
 }
