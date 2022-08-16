@@ -10,6 +10,7 @@ import Login from './Authentication/Login';
 import Signup from './Authentication/Signup';
 import ProtectedRoute from './Authentication/ProtectedRoute';
 import { UserAuthContextProvider } from '../context/UserAuthContext';
+import SearchResultShow from './Recipes2/SearchResultShow';
 
 function App() {
 	return (
@@ -32,6 +33,7 @@ function App() {
 							<Route path="/recipes2" element={<Recipes2 />} />
 							<Route path="/search" element={<Search />} />
 							<Route path="/login" element={<Login />} />
+							<Route path='/results/:ingredients' element={<SearchResultShow /> } />
 						</Routes>
 					</UserAuthContextProvider>
 				</Router>

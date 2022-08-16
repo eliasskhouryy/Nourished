@@ -4,35 +4,26 @@ import SearchResultShow from './SearchResultShow';
 import '../recipe.css';
 import { useUserAuth } from '../../context/UserAuthContext';
 import Home from '../Authentication/Home';
+import axios from 'axios';
 
 export default function Recipes2() {
-	const { logOut, user } = useUserAuth();
-	const navigate = useNavigate();
-
-	const handleLogout = async () => {
-		try {
-			await logOut();
-			navigate('/');
-		} catch (error) {
-			console.log(error.message);
-		}
-	};
-	const YOUR_APP_ID = `2cb4a854`;
-	const YOUR_APP_KEY = `68c5e9abaabd7cda76ac6d01c1c7a90f`;
-
 	const [recipes, setRecipes] = useState([]);
 	const [search, setSearch] = useState();
 	const [query, setQuery] = useState('');
 
-	useEffect(() => {
-		getRecipes();
-	}, [query]);
-
-	const getRecipes = async () => {
-		const response = await fetch(`https://api.edamam.com/search?q=${query}&app_id=${YOUR_APP_ID}&app_key=${YOUR_APP_KEY}`);
-		const data = await response.json();
-		setRecipes(data.hits);
-		console.log(data.hits);
+	const options = {
+		method: 'GET',
+		url: 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/findByIngredients',
+		params: {
+		ingredients: recipes ,
+		number: '10',
+		ignorePantry: 'true',
+		ranking: '1'
+		},
+		headers: {
+		'X-RapidAPI-Key': '0e9c30ad1cmshc1c8722b9c03a83p18e584jsnba09b9fe4bcd',
+		'X-RapidAPI-Host': 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com'
+		}
 	};
 
 	const updateSearch = (e) => {
@@ -44,6 +35,14 @@ export default function Recipes2() {
 		setQuery(search);
 		setSearch('');
 	};
+
+	useEffect(() => {
+		 axios.request(options).then(function (response) {
+		  setRecipes(response.data);
+	  }).catch(function (error) {
+		  console.error(error);
+	  });
+	}, [query]);
 
 	return (
 		<div>
@@ -60,11 +59,9 @@ export default function Recipes2() {
 			<div className="contain">
 				{recipes.map((recipe) => (
 					<SearchResultShow
-						key={recipe.recipe.label}
-						title={recipe.recipe.label}
-						calories={parseInt(recipe.recipe.calories)}
-						image={recipe.recipe.image}
-						ingredients={recipe.recipe.ingredients}
+						key={recipe.title}
+						title={recipe.title}
+						image={recipe.image}
 					/>
 				))}
 			</div>
