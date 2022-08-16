@@ -5,60 +5,71 @@ import { Link } from 'react-router-dom';
 import Search from './Search'
 import AddIngredients from './AddIngredients';
 import Home from '../Authentication/Home';
+import axios from 'axios';
 
 export default function Recipes2() {
-	const YOUR_APP_ID = `2cb4a854`;
-	const YOUR_APP_KEY = `68c5e9abaabd7cda76ac6d01c1c7a90f`;
-
 	const [recipes, setRecipes] = useState([]);
 	const [recipes1, setRecipes1] = useState([]);
-	const [search, setSearch] = useState('');
-	const [query, setQuery] = useState('');
-
+	
+	const options = {
+			method: 'GET',
+			url: 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/findByIngredients',
+			params: {
+			ingredients: 'asian',
+			number: '2',
+			ignorePantry: 'true',
+			ranking: '1'
+			},
+			headers: {
+			'X-RapidAPI-Key': '0e9c30ad1cmshc1c8722b9c03a83p18e584jsnba09b9fe4bcd',
+			'X-RapidAPI-Host': 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com'
+			}
+		};
+		const options1 = {
+			method: 'GET',
+			url: 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/findByIngredients',
+			params: {
+			ingredients: 'pasta',
+			number: '2',
+			ignorePantry: 'true',
+			ranking: '1'
+			},
+			headers: {
+			'X-RapidAPI-Key': '0e9c30ad1cmshc1c8722b9c03a83p18e584jsnba09b9fe4bcd',
+			'X-RapidAPI-Host': 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com'
+			}
+		};
+	
 	useEffect(() => {
-		getRecipes();
-		getRecipes1();
-	}, [query]);
-
-	const getRecipes = async () => {
-		const response = await fetch(`https://api.edamam.com/search?q=${'chicken,eggs,carrot,garlic'}&app_id=${YOUR_APP_ID}&app_key=${YOUR_APP_KEY}`);
-		const data = await response.json();
-		setRecipes(data.hits);
-		console.log(data.hits);
-	};
-	const getRecipes1 = async () => {
-		const response = await fetch(`https://api.edamam.com/search?q=${'vegan'}&app_id=${YOUR_APP_ID}&app_key=${YOUR_APP_KEY}`);
-		const data = await response.json();
-		setRecipes1(data.hits);
-		console.log(data.hits);
-	};
-
-	const updateSearch = (e) => {
-		setSearch(e.target.value);
-	};
-
-	const getSearch = (e) => {
-		e.preventDefault();
-		setQuery(search);
-		setSearch('');
-	};
-
+	// 	 axios.request(options).then(function (response) {
+	// 	  setRecipes1(response.data);
+	//   }).catch(function (error) {
+	// 	  console.error(error);
+	//   });
+		axios.request(options1).then(function (response) {
+			setRecipes(response.data);
+			console.log(response.data)
+		}).catch(function (error) {
+			console.error(error);
+		});
+	}, []);
+	
 	return (
 		<div>
 			< Home />
 			< AddIngredients /> 
-			<h1>{'Asian'}</h1>
+			<h1>{'Pasta'}</h1>
 			<div className="contain">
 				{recipes.map((recipe) => (
-					<RecipeDefaultShow key={recipe.recipe.label} title={recipe.recipe.label} calories={parseInt(recipe.recipe.calories)} image={recipe.recipe.image} link={recipe.recipe.url} />
+					<RecipeDefaultShow key={recipe.title} title={recipe.title}  image={recipe.image} id={recipe.id} link={`https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/${recipe.id}/information`}/>
 				))}
 			</div>
-			<h1>{'Vegan'}</h1>
+			{/* <h1>{'Asian'}</h1>
 			<div className="contain">
 				{recipes1.map((recipe) => (
-					<RecipeDefaultShow key={recipe.recipe.label} title={recipe.recipe.label} calories={parseInt(recipe.recipe.calories)} image={recipe.recipe.image} link={recipe.recipe.url} />
+					<RecipeDefaultShow key={recipe.title} title={recipe.title}  image={recipe.image} />
 				))}
-			</div>
+			</div> */}
 		</div>
 	);
 }
