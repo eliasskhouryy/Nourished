@@ -16,7 +16,7 @@ export default function Recipes2() {
 			url: 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/findByIngredients',
 			params: {
 			ingredients: 'asian',
-			number: '2',
+			number: '10',
 			ignorePantry: 'true',
 			ranking: '1'
 			},
@@ -30,7 +30,7 @@ export default function Recipes2() {
 			url: 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/findByIngredients',
 			params: {
 			ingredients: 'pasta',
-			number: '2',
+			number: '10',
 			ignorePantry: 'true',
 			ranking: '1'
 			},
