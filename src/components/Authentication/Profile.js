@@ -5,18 +5,27 @@ import { useNavigate } from 'react-router';
 import Home from './Home';
 import { db } from '../../firebase';
 import '../profile.css';
-import { collection, getDocs, addDoc } from 'firebase/firestore';
+import { collection, getDocs, addDoc, updateDoc, doc } from 'firebase/firestore';
 
 export default function Profile() {
 	const { logOut, user } = useUserAuth();
-
+	const [NewUpdates, setNewUpdates] = useState('');
 	const [newFirstName, setNewFirstName] = useState('');
 	const [newLastName, setNewLastName] = useState('');
 	const [userDetails, setUserDetails] = useState([]);
 	const userDetailCollectionRef = collection(db, 'userDetails');
+	const navigate = useNavigate();
+
+	const updateFirstName = async (id, firstName) => {
+		const userDoc = doc(db, 'userDetails');
+		const newFields = { firstName: NewUpdates };
+		await updateDoc(userDoc, newFields);
+	};
 
 	const addUserDetail = async () => {
-		await addDoc(userDetailCollectionRef, { firstName: newFirstName, lastName: newLastName });
+		await addDoc(userDetailCollectionRef, { userId: user.uid, name: newLastName });
+
+		window.location.reload();
 	};
 
 	useEffect(() => {
@@ -27,17 +36,32 @@ export default function Profile() {
 		getUserDetails();
 	}, []);
 
+	// userDetails.map((u) => {
+	// 	u.userId == user.uid ? u.name : '';
+	// 	console.log(user.uid, u.userId, u.name);
+	// });
+
 	return (
 		<div>
 			<Home />
 			<div className="profile">
 				Hello {user.email}
-				<p>{userDetails.map((user) => user.firstName)} </p>
-				<p>{userDetails.map((user) => user.lastName)}</p>
+				{userDetails.map((u) => (u.userId == user.uid ? u.name : ''))}
+				<p>
+					{userDetails.map((user) => {
+						return (
+							<div>
+								{/* {user.firstName} */}
+								{/* <input type="text" onChange={(event) => setNewUpdates(event.target.value)} />
+								<button onClick={updateFirstName}>UpdateName</button> */}
+							</div>
+						);
+					})}{' '}
+				</p>
+				{/* <p>{userDetails.map((user) => user.lastName)}</p> */}
 			</div>
 			<div>
-				<input type="text" placeholder="first name" onChange={(event) => setNewFirstName(event.target.value)} />
-				<input type="text" placeholder="last name" onChange={(event) => setNewLastName(event.target.value)} />
+				<input type="text" placeholder="name" onChange={(event) => setNewLastName(event.target.value)} />
 				<button onClick={addUserDetail}>Add Name</button>
 			</div>
 		</div>

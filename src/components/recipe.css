@@ -5,14 +5,14 @@ body {
 	text-align: center;
 	overflow-x: scroll;
 	font-family: 'Poppins', sans-serif;
-	background-color: ;
 }
 
 .contain {
 	overflow-x: auto;
 	overflow-y: hidden;
 	white-space: nowrap;
-	background-color: rgb(226, 226, 226);
+	background-color: rgb(241, 241, 241);
+	box-shadow: rgba(0, 0, 0, 0.06) 0px 2px 4px 0px inset;
 }
 
 .box {
@@ -53,10 +53,10 @@ body {
 	padding: 12px;
 	border: 0;
 	border-radius: 5px;
-	margin: 5px;
+	margin: 5px auto;
 	background-color: rgb(250, 247, 243);
 	width: 400px;
-	max-width: 400px;
+	max-width: 90vw;
 }
 
 .mainSearch .button {
