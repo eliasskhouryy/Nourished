@@ -13,17 +13,17 @@ export default function Recipes2() {
 
 	const options = {
 		method: 'GET',
-		url: 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/findByIngredients',
+		url: 'https://api.spoonacular.com/recipes/findByIngredients',
 		params: {
-		ingredients: recipes ,
-		number: '10',
-		ignorePantry: 'true',
-		ranking: '1'
+			ingredients: recipes,
+			number: '10',
+			ignorePantry: 'true',
+			ranking: '1',
 		},
 		headers: {
-		'X-RapidAPI-Key': '0e9c30ad1cmshc1c8722b9c03a83p18e584jsnba09b9fe4bcd',
-		'X-RapidAPI-Host': 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com'
-		}
+			'X-RapidAPI-Key': '65f1475d55msh8d83be2f52d92f3p15f278jsnc4e28a3274ce',
+			'X-RapidAPI-Host': 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com',
+		},
 	};
 
 	const updateSearch = (e) => {
@@ -37,11 +37,14 @@ export default function Recipes2() {
 	};
 
 	useEffect(() => {
-		 axios.request(options).then(function (response) {
-		  setRecipes(response.data);
-	  }).catch(function (error) {
-		  console.error(error);
-	  });
+		axios
+			.request(options)
+			.then(function (response) {
+				setRecipes(response.data);
+			})
+			.catch(function (error) {
+				console.error(error);
+			});
 	}, [query]);
 
 	return (
@@ -58,11 +61,7 @@ export default function Recipes2() {
 			<h1>{query}</h1>
 			<div className="contain">
 				{recipes.map((recipe) => (
-					<SearchResultShow
-						key={recipe.title}
-						title={recipe.title}
-						image={recipe.image}
-					/>
+					<SearchResultShow key={recipe.title} title={recipe.title} image={recipe.image} />
 				))}
 			</div>
 		</div>
