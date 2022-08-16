@@ -8,7 +8,7 @@ import axios from 'axios';
 
 export default function Recipes2() {
 	const [recipes, setRecipes] = useState([]);
-	const [search, setSearch] = useState('');
+	const [search, setSearch] = useState();
 	const [query, setQuery] = useState('');
 
 	const options = {

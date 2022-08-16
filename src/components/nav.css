@@ -3,13 +3,56 @@ nav {
 	justify-content: space-between;
 	box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 	padding: 10px 15px;
+	background-color: white;
 }
 
 nav .navLeft {
 	margin-top: auto;
 	margin-bottom: auto;
 }
-nav .navRight {
+nav .navRight,
+nav .user {
+	display: inline-block;
+	margin-top: auto;
+	margin-bottom: auto;
+}
+
+nav .user a {
+	text-decoration: none;
+	padding: 6px 16px;
+	background-color: #f73f52;
+	color: white;
+	border-radius: 5px;
+}
+
+nav .navRight button {
+	text-decoration: none;
+	border: none;
+	padding: 10px 16px;
+	background-color: #f73f52;
+	color: white;
+	border-radius: 5px;
+}
+
+nav .navRight a {
+	text-decoration: none;
+	color: black;
+	margin-right: 10px;
+}
+
+nav .navRight button {
+	box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+
+nav .user a:hover {
+	box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+
+nav img {
+	width: 120px;
+	height: 50px;
+	object-fit: cover;
+	display: inline-block;
 	margin-top: auto;
 	margin-bottom: auto;
 }

@@ -18,11 +18,15 @@ const Home = () => {
 	};
 	return (
 		<nav>
-			<div className="navLeft">Nourised</div>
+			<div className="navLeft">
+				<Link to="/">
+					<img src="./logo_transparent.png" alt="" />
+				</Link>
+			</div>
 
 			{user ? (
 				<div className="navRight">
-					{user.email}
+					<Link to="/profile">{user.email} </Link>
 					<button onClick={handleLogout}>Logout</button>
 				</div>
 			) : (
