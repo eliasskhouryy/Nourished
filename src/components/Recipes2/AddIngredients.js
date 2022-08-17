@@ -43,16 +43,15 @@ class AddIngredients extends Component {
 }
 
 const DisplayIngredients = (props) => {
-	return (
-		<div>
-			<p>Ingredients: {props.UsersIngredients.length}</p>
-			{props.UsersIngredients.map((s) => (
-				<p key={s.toString()}>{s}</p>
-			))}
-		</div>
-	);
+    return (
+        <div>
+            <p>Ingredients: {props.UsersIngredients.length}</p>
+            {props.UsersIngredients.map((s) => (
+                <p key={s.toString()}>{s}</p>
+            ))}
+        </div>
+    );
 };
-
 const SearchFormIngredients = (props) => {
 	const [value, setValue] = useState('');
 	const _handleSubmit = (event) => {
@@ -77,3 +76,13 @@ const SearchFormIngredients = (props) => {
 };
 
 export default AddIngredients;
+
+
+
+
+
+
+
+
+
+
