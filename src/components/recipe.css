@@ -79,8 +79,14 @@ body {
 	vertical-align: middle;
 	background-color: #3faef7;
 	color: white;
-	height: 300px;
+	height: 400px;
 	margin-top: 5px;
+}
+
+.pantryform{
+	text-align: right;
+	vertical-align: middle;
+	display: inline-block;
 }
 
 /* .display_Ingredients h1 {
