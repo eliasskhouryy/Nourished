@@ -16,7 +16,7 @@ export default function Recipes2() {
 		url: 'https://api.spoonacular.com/recipes/findByIngredients',
 		params: {
 			ingredients: recipes,
-			number: '10',
+			number: '1',
 			ignorePantry: 'true',
 			ranking: '1',
 		},

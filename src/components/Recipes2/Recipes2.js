@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import RecipeDefaultShow from './RecipeDefaultShow';
 import '../recipe.css';
 import { Link } from 'react-router-dom';
-import Search from './Search';
 import AddIngredients from './AddIngredients';
 import Home from '../Authentication/Home';
 import axios from 'axios';
@@ -16,7 +15,7 @@ export default function Recipes2() {
 		url: 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/findByIngredients',
 		params: {
 			ingredients: 'asian',
-			number: '10',
+			number: '1',
 			ignorePantry: 'true',
 			ranking: '1',
 		},
@@ -30,7 +29,7 @@ export default function Recipes2() {
 		url: 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/findByIngredients',
 		params: {
 			ingredients: 'pasta',
-			number: '10',
+			number: '1',
 			ignorePantry: 'true',
 			ranking: '1',
 		},
