@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import SearchResultShow from './SearchResultShow';
 import '../recipe.css';
+
 class AddIngredients extends Component {
 	constructor() {
 		super();

@@ -32,7 +32,7 @@ console.log(id)
 				<div>
 					<h1>{recipe.title}</h1>
 					<img src={recipe.image} />
-                    {/* <h2 dangerouslySetInnerHTML={{__html: recipe.instructions}} /> */}
+                    <h2 dangerouslySetInnerHTML={{__html: recipe.instructions}} />
                     
 				</div>
 
