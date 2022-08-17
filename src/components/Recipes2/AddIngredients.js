@@ -16,7 +16,14 @@ class AddIngredients extends Component {
 	}
 
 	_updateIngredients = (value) => {
-		this.setState({ UsersIngredients: [...this.state.UsersIngredients, value] });
+		let updatedIngredients = [];
+		if(this.state.UsersIngredients.includes(value)){
+			updatedIngredients = this.state.UsersIngredients.filter((i)=> i!=value)
+		} else {
+			updatedIngredients = [...this.state.UsersIngredients, value]
+		}
+
+		this.setState({ UsersIngredients: updatedIngredients });
 	};
 
 	// _updatePantry = (value) => {
@@ -73,17 +80,23 @@ const PantryForm = (props) => {
     const [garlic,setFirst]=useState(true);
     const [oliveoil,setSecond]=useState(true);
     const handleChange = (data) => {
-                if(garlic === true){
-                console.log(data)
-                props.onChange(data)
-            }
-        setFirst(!garlic)
+            //     if(garlic === true){
+            //     console.log(data)
+            //     props.onChange(data)
+            // }
+		if ( data === 'garlic'){
+			setFirst(!garlic) 
+		}
 
-            if(oliveoil === true ){
-                console.log(data)
-                props.onChange(data)
-            }
-            setSecond(!oliveoil)
+		// if(oliveoil === true ){
+		// 	console.log(data)
+		// 	props.onChange(data)
+		// }
+		
+		if ( data === 'oliveoil'){
+			setSecond(!oliveoil)
+		}
+		props.onChange(data)
         }
 
     return(
