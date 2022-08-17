@@ -3,39 +3,40 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import SearchResultShow from './SearchResultShow';
 import '../recipe.css';
+import IngredientSelector from './IngredientSelector'
 
 class AddIngredients extends Component {
 	constructor() {
 		super();
 		this.state = {
 			UsersIngredients: [],
-			pantryitems: []
+			pantryitems: [],
+			AllIngredients:[]
 		};
 		this._updateIngredients = this._updateIngredients.bind(this);
-		// this._updatePantry = this._updatePantry.bind(this)
 	}
 
 	_updateIngredients = (value) => {
-		let updatedIngredients = [];
-		if(this.state.UsersIngredients.includes(value)){
-			updatedIngredients = this.state.UsersIngredients.filter((i)=> i!=value)
-		} else {
-			updatedIngredients = [...this.state.UsersIngredients, value]
-		}
+        this.setState({ UsersIngredients: [...this.state.UsersIngredients,value] });
+		this._AllIngredientUpdate([...this.state.UsersIngredients,value],this.state.pantryitems);
+    };
 
-		this.setState({ UsersIngredients: updatedIngredients });
-	};
+	_updatePantry = (value) => {
+        this.setState({ pantryitems: value });
+		this._AllIngredientUpdate(this.state.UsersIngredients, value);
+    };
 
-	// _updatePantry = (value) => {
-    //     this.setState({ pantryitems: [...this.state.pantryitems,value] });
-    // };
+	_AllIngredientUpdate = (newUsersIngredients,value) => {
+
+        this.setState({ AllIngredients: [...value, ...newUsersIngredients] });
+    };
 
 	render() {
 		return (
 			<div className="display_Ingredients">
-				<SearchFormIngredients _updateIngredients={this._updateIngredients} onSubmit={this._updateIngredients} ingredients={this.state.UsersIngredients} onClick={this._handleClick} />
+				<SearchFormIngredients _updateIngredients={this._updateIngredients} onSubmit={this._updateIngredients} ingredients={this.state.AllIngredients} onClick={this._handleClick} />
 				<DisplayIngredients UsersIngredients={this.state.UsersIngredients} />
-				<PantryForm onChange={this._updateIngredients} UsersIngredients={this.state.UsersIngredients}  />
+				<IngredientSelector ingredients={ ['Garlic', 'Oliveoil', 'Turmeric','Pasta', 'Rice', 'Butter'] } onUpdate={ this._updatePantry }/>
 			</div>
 		);
 	}
@@ -74,40 +75,5 @@ const SearchFormIngredients = (props) => {
 	);
 
 };
-
-const PantryForm = (props) => {
-    console.log(props)
-    const [garlic,setFirst]=useState(true);
-    const [oliveoil,setSecond]=useState(true);
-    const handleChange = (data) => {
-            //     if(garlic === true){
-            //     console.log(data)
-            //     props.onChange(data)
-            // }
-		if ( data === 'garlic'){
-			setFirst(!garlic) 
-		}
-
-		// if(oliveoil === true ){
-		// 	console.log(data)
-		// 	props.onChange(data)
-		// }
-		
-		if ( data === 'oliveoil'){
-			setSecond(!oliveoil)
-		}
-		props.onChange(data)
-        }
-
-    return(
-        <div className = "mainSearch pantryform">
-            Your Pantry
-            <br></br>
-            <input onChange = {()=>handleChange("garlic")} type = "checkbox"  value = {garlic} /> Garlic
-            <input onChange = {()=>handleChange("oliveoil")} type = "checkbox"  value = {oliveoil}  /> Olive Oil
-            {/* <p>Pantryitems: {props.UsersIngredients.length}</p> */}
-        </div>
-    )
-}
 
 export default AddIngredients;
