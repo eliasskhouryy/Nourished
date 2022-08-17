@@ -3,12 +3,11 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import SearchResultShow from './SearchResultShow';
 import '../recipe.css';
-import Profile from '../Authentication/Profile';
-import { useUserAuth } from '../../context/UserAuthContext';
 
 class AddIngredients extends Component {
 	constructor() {
 		super();
+
 		this.state = {
 			UsersIngredients: [],
 			pantryitems: [],
@@ -45,18 +44,15 @@ class AddIngredients extends Component {
 
 const DisplayIngredients = (props) => {
 	return (
-		<div>
-			<p>Ingredients: {props.UsersIngredients.length}</p>
+		<div className="ingredientsList">
+			<h3>Ingredients</h3>
 			{props.UsersIngredients.map((s) => (
 				<p key={s.toString()}>{s}</p>
 			))}
 		</div>
 	);
 };
-
 const SearchFormIngredients = (props) => {
-	const { logOut, user } = useUserAuth();
-
 	const [value, setValue] = useState('');
 	const _handleSubmit = (event) => {
 		event.preventDefault();
@@ -72,7 +68,7 @@ const SearchFormIngredients = (props) => {
 				<input type="submit" value="+" className="button" />
 			</form>
 			<Link to={`/results/${props.ingredients.join(',')}`}>
-				<input type="button" value="Search for filtert Recipes" className="filterButton" />
+				<input type="button" value="Search Recipes" className="filterButton" />
 			</Link>
 		</div>
 	);
@@ -103,9 +99,8 @@ const PantryForm = (props) => {
 	};
 
 	return (
-		<div className="mainSearch pantryform">
-			Your Pantry
-			<br></br>
+		<div className="pantryform">
+			<h2>Your Pantry</h2>
 			<input onChange={() => handleChange('garlic')} type="checkbox" value={garlic} /> Garlic
 			<input onChange={() => handleChange('oliveoil')} type="checkbox" value={oliveoil} /> Olive Oil
 			{/* <p>Pantryitems: {props.UsersIngredients.length}</p> */}

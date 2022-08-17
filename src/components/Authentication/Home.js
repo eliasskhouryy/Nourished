@@ -63,6 +63,7 @@ const Home = () => {
 			) : (
 				<div className="user">
 					<Link to="/login">Login</Link>
+					<Link to="/Signup">Sign up</Link>
 				</div>
 			)}
 		</nav>

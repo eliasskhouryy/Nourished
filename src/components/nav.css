@@ -23,6 +23,7 @@ nav .user a {
 	background-color: #f73f52;
 	color: white;
 	border-radius: 5px;
+	margin-left: 10px;
 }
 
 nav .navRight button {

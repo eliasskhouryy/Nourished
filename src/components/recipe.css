@@ -83,9 +83,17 @@ body {
 	margin-top: 5px;
 }
 
-.pantryform{
-	text-align: right;
-	vertical-align: middle;
+.pantryform {
+	display: inline-block;
+	margin: 0 auto;
+}
+
+.pantryform h2 {
+	font-size: 18px;
+	margin: 0 auto;
+}
+
+.ingredientsList p {
 	display: inline-block;
 }
 

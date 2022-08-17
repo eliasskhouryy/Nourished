@@ -48,10 +48,26 @@ export default function Profile() {
 		getUserIngredients();
 	}, []);
 
-	// userDetails.map((u) => {
-	// 	u.userId == user.uid ? u.name : '';
-	// 	console.log(user.uid, u.userId, u.name);
-	// });
+	const createNameCheck = (authenticationTable, userInfoTable, currentUserID) => {
+		let output;
+		for (let i = 0; i < userInfoTable.length; i++) {
+			if (currentUserID == userInfoTable[i].userId) {
+				if (userInfoTable[i].name !== undefined) {
+					output = userInfoTable[i].name;
+				}
+			}
+		}
+		if (output) {
+			return output;
+		} else {
+			return (
+				<div>
+					<input type="text" placeholder="name" onChange={(event) => setNewLastName(event.target.value)} />
+					<button onClick={addUserDetail}>Add Name</button>{' '}
+				</div>
+			);
+		}
+	};
 
 	return (
 		<div>
@@ -72,10 +88,7 @@ export default function Profile() {
 				</p>
 				{/* <p>{userDetails.map((user) => user.lastName)}</p> */}
 			</div>
-			<div>
-				<input type="text" placeholder="name" onChange={(event) => setNewLastName(event.target.value)} />
-				<button onClick={addUserDetail}>Add Name</button>{' '}
-			</div>
+			<div>{createNameCheck}</div>
 
 			<div>
 				<h1>Add Default Ingredients from your Pantry</h1>
