@@ -1,9 +1,15 @@
+body {
+	margin-top: 80px;
+}
 nav {
 	display: flex;
 	justify-content: space-between;
 	box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 	padding: 10px 15px;
 	background-color: white;
+	position: fixed;
+	top: 0;
+	width: 100%;
 }
 
 nav .navLeft {
@@ -23,6 +29,7 @@ nav .user a {
 	background-color: #f73f52;
 	color: white;
 	border-radius: 5px;
+	margin-left: 10px;
 }
 
 nav .navRight button {

@@ -48,17 +48,34 @@ export default function Profile() {
 		getUserIngredients();
 	}, []);
 
-	// userDetails.map((u) => {
-	// 	u.userId == user.uid ? u.name : '';
-	// 	console.log(user.uid, u.userId, u.name);
-	// });
+	const createNameCheck = (authenticationTable, userInfoTable, currentUserID) => {
+		let output;
+		for (let i = 0; i < userInfoTable.length; i++) {
+			if (currentUserID == userInfoTable[i].userId) {
+				if (userInfoTable[i].name !== undefined) {
+					output = userInfoTable[i].name;
+				}
+			}
+		}
+		if (output) {
+			return <h1>{output}</h1>;
+		} else {
+			return (
+				<div>
+					<h2>Add your name to your profile</h2>
+					<input type="text" placeholder="name" onChange={(event) => setNewLastName(event.target.value)} />
+					<button onClick={addUserDetail}>Add Name</button>{' '}
+				</div>
+			);
+		}
+	};
 
 	return (
 		<div>
 			<Home />
 			<div className="profile">
 				{/* Hello {user.email} */}
-				{userDetails.map((u) => (u.userId == user.uid ? u.name : ''))}
+				{createNameCheck(user, userDetails, user.uid)}
 				<p>
 					{userDetails.map((user) => {
 						return (
@@ -72,13 +89,10 @@ export default function Profile() {
 				</p>
 				{/* <p>{userDetails.map((user) => user.lastName)}</p> */}
 			</div>
-			<div>
-				<input type="text" placeholder="name" onChange={(event) => setNewLastName(event.target.value)} />
-				<button onClick={addUserDetail}>Add Name</button>{' '}
-			</div>
+			<div>{createNameCheck}</div>
 
 			<div>
-				<h1>Add Default Ingredients from your Pantry</h1>
+				<h2>Add Default Ingredients from your Pantry</h2>
 
 				<input type="text" placeholder="Lettuce" onChange={(event) => setIngredient(event.target.value)} />
 				<button onClick={addIngredient}>Add Ingredient</button>

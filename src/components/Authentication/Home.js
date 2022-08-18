@@ -51,7 +51,7 @@ const Home = () => {
 		<nav>
 			<div className="navLeft">
 				<Link to="/">
-					<img src="./logo_transparent.png" alt="" />
+					<img src="/logo_transparent.png" alt="" />
 				</Link>
 			</div>
 
@@ -63,6 +63,7 @@ const Home = () => {
 			) : (
 				<div className="user">
 					<Link to="/login">Login</Link>
+					<Link to="/Signup">Sign up</Link>
 				</div>
 			)}
 		</nav>

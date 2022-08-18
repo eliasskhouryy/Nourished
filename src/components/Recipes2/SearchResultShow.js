@@ -4,6 +4,9 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import ThisRecipe from './ThisRecipe';
+import Home from '../Authentication/Home';
+import '../recipe.css';
+import AddIngredients from './AddIngredients';
 
 const SearchResultShow = () => {
 	let { ingredients } = useParams();
@@ -14,7 +17,7 @@ const SearchResultShow = () => {
 		url: 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/findByIngredients',
 		params: {
 			ingredients: ingredients,
-			number: '1',
+			number: '10',
 			ignorePantry: 'false',
 			ranking: '1',
 		},
@@ -36,15 +39,25 @@ const SearchResultShow = () => {
 			});
 	}, [ingredients]);
 
-	return recipes.map((recipe) => {
-		return (
-			<Link to={`/result/recipe/${recipe.id}`}>
-				<div key={recipe.title}>
-					<h1>{recipe.title}</h1>
-					<img src={recipe.image} />
-				</div>
-			</Link>
-		);
-	});
+	return (
+		<div>
+			<Home />
+			<AddIngredients />
+			<div className="contain">
+				{recipes.map((recipe) => {
+					return (
+						<div className="box">
+							<Link to={`/result/recipe/${recipe.id}`}>
+								<div key={recipe.title}>
+									<h2>{recipe.title}</h2>
+									<img src={recipe.image} />
+								</div>
+							</Link>
+						</div>
+					);
+				})}
+			</div>
+		</div>
+	);
 };
 export default SearchResultShow;

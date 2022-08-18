@@ -4,6 +4,7 @@ import { Form, Alert } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
 import { useUserAuth } from '../../context/UserAuthContext';
 import GoogleButton from 'react-google-button';
+import Home from './Home';
 import './forms.css';
 
 const Login = () => {
@@ -35,26 +36,29 @@ const Login = () => {
 	};
 
 	return (
-		<div className="formContainer">
-			<h2>Login</h2>
-			{error && <Alert variant="danger">{error}</Alert>}
-			<form onSubmit={handleSubmit}>
-				<input type="email" placeholder="Email address" onChange={(e) => setEmail(e.target.value)} />
+		<div>
+			<Home />
+			<div className="formContainer">
+				<h2>Login</h2>
+				{error && <Alert variant="danger">{error}</Alert>}
+				<form onSubmit={handleSubmit}>
+					<input type="email" placeholder="Email address" onChange={(e) => setEmail(e.target.value)} />
 
-				<input type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
+					<input type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
 
-				<div className="d-grid gap-2">
-					<button variant="primary" type="Submit">
-						Log In
-					</button>
+					<div className="d-grid gap-2">
+						<button variant="primary" type="Submit">
+							Log In
+						</button>
+					</div>
+				</form>
+				<hr />
+				<div>
+					<GoogleButton className="g-btn" type="dark" onClick={handleGoogleSignIn} />
 				</div>
-			</form>
-			<hr />
-			<div>
-				<GoogleButton className="g-btn" type="dark" onClick={handleGoogleSignIn} />
-			</div>
-			<div className="bottomText">
-				Don't have an account? <Link to="/signup">Sign up</Link>
+				<div className="bottomText">
+					Don't have an account? <Link to="/signup">Sign up</Link>
+				</div>
 			</div>
 		</div>
 	);

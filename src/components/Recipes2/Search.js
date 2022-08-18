@@ -5,11 +5,18 @@ import '../recipe.css';
 import { useUserAuth } from '../../context/UserAuthContext';
 import Home from '../Authentication/Home';
 import axios from 'axios';
+import Profile from '../Authentication/Profile';
+import { db } from '../../firebase';
+import { collection, getDocs, addDoc, updateDoc, doc } from 'firebase/firestore';
 
 export default function Recipes2() {
+	const [userIngredients, setUserIngredient] = useState([]);
+
 	const [recipes, setRecipes] = useState([]);
 	const [search, setSearch] = useState();
-	const [query, setQuery] = useState('');
+	const [query, setQuery] = useState([]);
+	const { logOut, user } = useUserAuth();
+	const userIngredientsRef = collection(db, 'userIngredients');
 
 	const options = {
 		method: 'GET',
@@ -21,7 +28,7 @@ export default function Recipes2() {
 			ranking: '1',
 		},
 		headers: {
-			'X-RapidAPI-Key': '65f1475d55msh8d83be2f52d92f3p15f278jsnc4e28a3274ce',
+			'X-RapidAPI-Key': process.env.REACT_APP_RAPID_API_KEY,
 			'X-RapidAPI-Host': 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com',
 		},
 	};
@@ -46,6 +53,13 @@ export default function Recipes2() {
 				console.error(error);
 			});
 	}, [query]);
+	useEffect(() => {
+		const getUserIngredients = async () => {
+			const data = await getDocs(userIngredientsRef);
+			setUserIngredient(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+		};
+		getUserIngredients();
+	}, []);
 
 	return (
 		<div>
@@ -53,11 +67,12 @@ export default function Recipes2() {
 
 			<h1>Nourished</h1>
 			<form onSubmit={getSearch} className="search-form">
-				<input className="search-bar" type="text" value={search} onChange={updateSearch} />
+				<input className="search-bar" type="text" value={userIngredients.map((i) => (i.userIdIngredient == user.uid ? i.ingredients : ''))} onChange={updateSearch} />
 				<button className="search-button" type="submit">
 					Search
 				</button>
 			</form>
+
 			<h1>{query}</h1>
 			<div className="contain">
 				{recipes.map((recipe) => (
