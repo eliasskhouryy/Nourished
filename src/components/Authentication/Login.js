@@ -15,6 +15,7 @@ const Login = () => {
 	const navigate = useNavigate();
 
 	const handleSubmit = async (e) => {
+		//async function to call the function login once the page is loaded
 		e.preventDefault();
 		setError('');
 		try {
@@ -26,6 +27,7 @@ const Login = () => {
 	};
 
 	const handleGoogleSignIn = async (e) => {
+		//Special firebase function that handles the google button login
 		e.preventDefault();
 		try {
 			await googleSignIn();
@@ -34,7 +36,7 @@ const Login = () => {
 			console.log(error.message);
 		}
 	};
-
+	// this form will handle the login in combination with the google login
 	return (
 		<div>
 			<Home />

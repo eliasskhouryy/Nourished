@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from 'firebase/auth';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Recipes2 from './Recipes2/Recipes2';
@@ -34,8 +34,8 @@ function App() {
 							<Route path="/recipes2" element={<Recipes2 />} />
 							<Route path="/search" element={<Search />} />
 							<Route path="/login" element={<Login />} />
-							<Route path='/results/:ingredients' element={<SearchResultShow /> } />
-							<Route path='/result/recipe/:id' element={<ThisRecipe/> } />
+							<Route path="/results/:ingredients" element={<SearchResultShow />} />
+							<Route path="/result/recipe/:id" element={<ThisRecipe />} />
 						</Routes>
 					</UserAuthContextProvider>
 				</Router>

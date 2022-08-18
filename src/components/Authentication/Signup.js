@@ -13,6 +13,7 @@ const Signup = () => {
 	let navigate = useNavigate();
 
 	const handleSubmit = async (e) => {
+		//hangles the sign up form and sends the data back to firebase with the "signUp" firebase function
 		e.preventDefault();
 		setError('');
 		try {

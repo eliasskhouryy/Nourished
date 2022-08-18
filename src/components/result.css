@@ -3,16 +3,17 @@
 }
 
 .body {
-	background-image: url('https://images.pexels.com/photos/1437811/pexels-photo-1437811.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');
+	background-image: url('https://images.pexels.com/photos/606540/pexels-photo-606540.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');
 	background-size: cover;
 	background-repeat: no-repeat;
 	background-attachment: fixed;
+	padding-bottom: 60px;
 }
 
 .result {
 	max-width: 760px;
 	margin: none;
-	margin: 20px auto;
+	margin: 50px auto;
 	padding: 0 30px 30px 30px;
 	background-color: white;
 	box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;

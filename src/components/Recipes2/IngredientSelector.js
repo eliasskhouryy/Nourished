@@ -1,5 +1,8 @@
 import { React, useState, useEffect } from 'react';
 import '../recipe.css';
+import { db } from '../../firebase';
+import { collection, getDocs, addDoc, updateDoc, doc } from 'firebase/firestore';
+import { useUserAuth } from '../../context/UserAuthContext';
 
 const IngredientSelector = (props) => {
 	const [selectedIngredients, setSelectedIngredients] = useState([]);

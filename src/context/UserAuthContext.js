@@ -24,6 +24,8 @@ export function UserAuthContextProvider({ children }) {
 	}
 
 	function logOut() {
+		window.location.reload();
+
 		return signOut(auth);
 	}
 
@@ -38,7 +40,6 @@ export function UserAuthContextProvider({ children }) {
 			setApiKey(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
 		};
 		getApiKey();
-		// apiKey.map((k) => k.key) CHECK TOMORROW WITH JOEL
 		return () => {
 			unsubscribe();
 		};

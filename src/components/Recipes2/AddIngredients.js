@@ -8,6 +8,7 @@ import '../profile.css';
 import { collection, getDocs, addDoc, updateDoc, doc } from 'firebase/firestore';
 import IngredientSelector from './IngredientSelector';
 import { useUserAuth } from '../../context/UserAuthContext';
+import { uid } from 'browser-router/html5-history/adapter';
 
 class AddIngredients extends Component {
 	constructor() {
@@ -31,7 +32,7 @@ class AddIngredients extends Component {
 		this._AllIngredientUpdate(this.state.UsersIngredients, value);
 	};
 
-	_AllIngredientUpdate = (newUsersIngredients, value) => {
+	_AllIngredientUpdate = (newUsersIngredients, value, userIngrediented) => {
 		this.setState({ AllIngredients: [...value, ...newUsersIngredients] });
 	};
 
@@ -60,6 +61,7 @@ class AddIngredients extends Component {
 						'Flour',
 						'Honey',
 						'Eggs',
+						'Vinegar',
 						'Potatoes',
 						'Onions',
 						'Lentils',
@@ -84,10 +86,14 @@ const DisplayIngredients = (props) => {
 		};
 		getUserIngredients();
 	}, []);
+	let ing = user ? userIngredients.map((i) => (i.userIdIngredient == user.uid ? i.ingredients + ', ' : '')) : '';
+
 	return (
 		<div className="ingredientsList">
 			<h3>Ingredients</h3>
-			{user ? userIngredients.map((i) => (i.userIdIngredient == user.uid ? i.ingredients + ', ' : '')) : ''}
+
+			{ing}
+
 			{props.UsersIngredients.map((s) => (
 				<p key={s.toString()}>
 					{s.toString()}
@@ -104,6 +110,8 @@ const SearchFormIngredients = (props) => {
 	const [userIngredients, setUserIngredient] = useState([]);
 	const { logOut, user } = useUserAuth();
 	const userIngredientsRef = collection(db, 'userIngredients');
+	const [value, setValue] = useState('');
+
 	useEffect(() => {
 		const getUserIngredients = async () => {
 			const data = await getDocs(userIngredientsRef);
@@ -111,10 +119,12 @@ const SearchFormIngredients = (props) => {
 		};
 		getUserIngredients();
 	}, []);
-	const [value, setValue] = useState(user ? userIngredients.map((i) => (i.userIdIngredient == user.uid ? i.ingredients + ', ' : '')) : '');
+	let ing = user ? userIngredients.map((i) => (i.userIdIngredient == user.uid ? i.ingredients + value : '')) : '';
+
 	const _handleSubmit = (event) => {
 		event.preventDefault();
-		props.onSubmit(value + (user ? userIngredients.map((i) => (i.userIdIngredient == user.uid ? i.ingredients + ', ' : '')) : ''));
+
+		props.onSubmit(value);
 		setValue('');
 	};
 	return (

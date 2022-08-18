@@ -21,6 +21,7 @@ const Home = () => {
 	}, []);
 
 	const handleLogout = async () => {
+		// Firebase function to handle logout
 		try {
 			await logOut();
 			navigate('/');
@@ -30,6 +31,7 @@ const Home = () => {
 	};
 
 	const compareIds = (authenticationTable, userInfoTable, currentUserID) => {
+		//Fucntion that loops through the user to check if the user id matches the info id to display the users name
 		let output;
 		for (let i = 0; i < userInfoTable.length; i++) {
 			if (currentUserID == userInfoTable[i].userId) {
@@ -39,9 +41,9 @@ const Home = () => {
 			}
 		}
 		if (output) {
-			return output;
+			return output; // Outputs the users name
 		} else {
-			return authenticationTable.email;
+			return authenticationTable.email; // if the name is not present it will output the users email
 		}
 	};
 

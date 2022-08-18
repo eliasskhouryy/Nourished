@@ -6,7 +6,7 @@ import Home from './Home';
 import { db } from '../../firebase';
 import '../profile.css';
 import { collection, getDocs, addDoc, updateDoc, doc } from 'firebase/firestore';
-
+// This is the profile page that takes care of the both the users name and ingredients list
 export default function Profile() {
 	const { logOut, user } = useUserAuth();
 	const [NewUpdates, setNewUpdates] = useState('');
@@ -17,24 +17,27 @@ export default function Profile() {
 	const [newLastName, setNewLastName] = useState('');
 	const [userDetails, setUserDetails] = useState([]);
 
-	const userDetailCollectionRef = collection(db, 'userDetails');
-	const userIngredientsRef = collection(db, 'userIngredients');
+	const userDetailCollectionRef = collection(db, 'userDetails'); // the reference that speaks to the firebase collection to retrieve the users name
+	const userIngredientsRef = collection(db, 'userIngredients'); // the reference that speaks to the firebase collection to retrieve the users ingredients
 
 	const navigate = useNavigate();
 
 	const addUserDetail = async () => {
+		// this function sends the users details to the firebase collection
 		await addDoc(userDetailCollectionRef, { userId: user.uid, name: newLastName });
 
 		window.location.reload();
 	};
 
 	const addIngredient = async () => {
+		// similar to the addUserDetail where it sends the ingredients to the firebase collection with the users id included
 		await addDoc(userIngredientsRef, { userIdIngredient: user.uid, ingredients: ingredient });
 
 		window.location.reload();
 	};
 
 	useEffect(() => {
+		// this use state functions to get both the users details and ingredients
 		const getUserDetails = async () => {
 			const data = await getDocs(userDetailCollectionRef);
 			setUserDetails(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
@@ -49,6 +52,7 @@ export default function Profile() {
 	}, []);
 
 	const createNameCheck = (authenticationTable, userInfoTable, currentUserID) => {
+		//name check functioned mention before to check if the users name is matched with the current user logged in
 		let output;
 		for (let i = 0; i < userInfoTable.length; i++) {
 			if (currentUserID == userInfoTable[i].userId) {
@@ -61,7 +65,7 @@ export default function Profile() {
 			return <h1>{output}</h1>;
 		} else {
 			return (
-				<div>
+				<div className="formy">
 					<h2>Add your name to your profile</h2>
 					<input type="text" placeholder="name" onChange={(event) => setNewLastName(event.target.value)} />
 					<button onClick={addUserDetail}>Add Name</button>{' '}
@@ -71,7 +75,7 @@ export default function Profile() {
 	};
 
 	return (
-		<div>
+		<div className="bodily">
 			<Home />
 			<div className="profile">
 				{/* Hello {user.email} */}
@@ -87,17 +91,14 @@ export default function Profile() {
 						);
 					})}{' '}
 				</p>
-				{/* <p>{userDetails.map((user) => user.lastName)}</p> */}
 			</div>
-			<div>{createNameCheck}</div>
 
-			<div>
+			<div className="formy">
 				<h2>Add Default Ingredients from your Pantry</h2>
-
-				<input type="text" placeholder="Lettuce" onChange={(event) => setIngredient(event.target.value)} />
-				<button onClick={addIngredient}>Add Ingredient</button>
-
-				{userIngredients.map((i) => (i.userIdIngredient == user.uid ? <li> {i.ingredients}</li> : ''))}
+				<input type="text" placeholder="Lettuce" onChange={(event) => setIngredient(event.target.value)} required />
+				<button onClick={addIngredient}>+</button>
+				<br /> <br />
+				<div className="listings">{userIngredients.map((i) => (i.userIdIngredient == user.uid ? <li> {i.ingredients}</li> : ''))}</div>
 			</div>
 		</div>
 	);
