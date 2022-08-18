@@ -1,4 +1,5 @@
-import React, { Component, useState, useEffect } from 'react';
+import React, { Component, useEffect, useState } from 'react';
+
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import SearchResultShow from './SearchResultShow';
@@ -10,14 +11,16 @@ import IngredientSelector from './IngredientSelector';
 import { useUserAuth } from '../../context/UserAuthContext';
 import { uid } from 'browser-router/html5-history/adapter';
 
+const jsonIngredients = (localStorage.getItem('selectedIngredients')) ; //getting values of locally stored ingredients
+const jsonUpdatedIngredients = JSON.parse(jsonIngredients.replace(/\\/g, "")) // converting from JSON format to a regular string in an array
+
 class AddIngredients extends Component {
 	constructor() {
 		super();
-
 		this.state = {
 			UsersIngredients: [],
-			pantryitems: [],
-			AllIngredients: [],
+			pantryitems: [jsonUpdatedIngredients], // State on page load
+			AllIngredients: []
 		};
 		this._updateIngredients = this._updateIngredients.bind(this);
 	}
@@ -35,12 +38,13 @@ class AddIngredients extends Component {
 	_AllIngredientUpdate = (newUsersIngredients, value, userIngrediented) => {
 		this.setState({ AllIngredients: [...value, ...newUsersIngredients] });
 	};
-
-	render() {
+	
+		render() {
 		return (
 			<div className="mainSearch">
 				<SearchFormIngredients _updateIngredients={this._updateIngredients} onSubmit={this._updateIngredients} ingredients={this.state.AllIngredients} onClick={this._handleClick} />
 				<DisplayIngredients UsersIngredients={this.state.UsersIngredients} />
+
 
 				<IngredientSelector
 					ingredients={[
@@ -73,7 +77,9 @@ class AddIngredients extends Component {
 			</div>
 		);
 	}
+
 }
+
 
 const DisplayIngredients = (props) => {
 	const [userIngredients, setUserIngredient] = useState([]);
