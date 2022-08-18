@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { Component, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import SearchResultShow from './SearchResultShow';
@@ -32,16 +32,21 @@ class AddIngredients extends Component {
         this.setState({ AllIngredients: [...value, ...newUsersIngredients] });
     };
 
+	// useEffect((items) => {
+	// 	this.state.AllIngredients(items)
+	// 	},[]);
 	render() {
 		return (
 			<div className="display_Ingredients">
 				<SearchFormIngredients _updateIngredients={this._updateIngredients} onSubmit={this._updateIngredients} ingredients={this.state.AllIngredients} onClick={this._handleClick} />
 				<DisplayIngredients UsersIngredients={this.state.UsersIngredients} />
-				<IngredientSelector ingredients={ ['Garlic', 'Oliveoil', 'Turmeric','Pasta', 'Rice', 'Butter'] } onUpdate={ this._updatePantry }/>
+				<IngredientSelector ingredients={ ['Garlic', 'Oliveoil', 'Turmeric','Pasta', 'Rice', 'Butter'] } onUpdate={ this._updatePantry } />
 			</div>
 		);
 	}
+
 }
+
 
 const DisplayIngredients = (props) => {
     return (
