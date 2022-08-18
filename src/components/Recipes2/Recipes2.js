@@ -39,22 +39,22 @@ export default function Recipes2() {
 		},
 	};
 
-	useEffect(() => {
-		// 	 axios.request(options).then(function (response) {
-		// 	  setRecipes1(response.data);
-		//   }).catch(function (error) {
-		// 	  console.error(error);
-		//   });
-		axios
-			.request(options1)
-			.then(function (response) {
-				setRecipes(response.data);
-				console.log(response.data);
-			})
-			.catch(function (error) {
-				console.error(error);
-			});
-	}, []);
+	// useEffect(() => {
+	// 	// 	 axios.request(options).then(function (response) {
+	// 	// 	  setRecipes1(response.data);
+	// 	//   }).catch(function (error) {
+	// 	// 	  console.error(error);
+	// 	//   });
+	// 	axios
+	// 		.request(options1)
+	// 		.then(function (response) {
+	// 			setRecipes(response.data);
+	// 			console.log(response.data);
+	// 		})
+	// 		.catch(function (error) {
+	// 			console.error(error);
+	// 		});
+	// }, []);
 
 	return (
 		<div>

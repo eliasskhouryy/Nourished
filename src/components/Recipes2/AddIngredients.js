@@ -5,6 +5,7 @@ import SearchResultShow from './SearchResultShow';
 import '../recipe.css';
 import IngredientSelector from './IngredientSelector'
 
+
 class AddIngredients extends Component {
 	constructor() {
 		super();
