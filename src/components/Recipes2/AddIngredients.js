@@ -11,8 +11,8 @@ import IngredientSelector from './IngredientSelector';
 import { useUserAuth } from '../../context/UserAuthContext';
 import { uid } from 'browser-router/html5-history/adapter';
 
-const jsonIngredients = (localStorage.getItem('selectedIngredients')) ; //getting values of locally stored ingredients
-const jsonUpdatedIngredients = JSON.parse(jsonIngredients.replace(/\\/g, "")) // converting from JSON format to a regular string in an array
+const jsonIngredients = localStorage.getItem('selectedIngredients'); //getting values of locally stored ingredients
+const jsonUpdatedIngredients = JSON.parse(jsonIngredients.replace(/\\/g, '')); // converting from JSON format to a regular string in an array
 
 class AddIngredients extends Component {
 	constructor() {
@@ -20,7 +20,7 @@ class AddIngredients extends Component {
 		this.state = {
 			UsersIngredients: [],
 			pantryitems: [jsonUpdatedIngredients], // State on page load
-			AllIngredients: []
+			AllIngredients: [],
 		};
 		this._updateIngredients = this._updateIngredients.bind(this);
 	}
@@ -38,13 +38,12 @@ class AddIngredients extends Component {
 	_AllIngredientUpdate = (newUsersIngredients, value, userIngrediented) => {
 		this.setState({ AllIngredients: [...value, ...newUsersIngredients] });
 	};
-	
-		render() {
+
+	render() {
 		return (
 			<div className="mainSearch">
 				<SearchFormIngredients _updateIngredients={this._updateIngredients} onSubmit={this._updateIngredients} ingredients={this.state.AllIngredients} onClick={this._handleClick} />
 				<DisplayIngredients UsersIngredients={this.state.UsersIngredients} />
-
 
 				<IngredientSelector
 					ingredients={[
@@ -77,9 +76,7 @@ class AddIngredients extends Component {
 			</div>
 		);
 	}
-
 }
-
 
 const DisplayIngredients = (props) => {
 	const [userIngredients, setUserIngredient] = useState([]);

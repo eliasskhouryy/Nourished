@@ -30,7 +30,7 @@ export default function Recipes2() {
 		url: 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/findByIngredients',
 		params: {
 			ingredients: 'pasta',
-			number: '1',
+			number: '10',
 			ignorePantry: 'true',
 			ranking: '1',
 		},

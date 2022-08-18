@@ -6,14 +6,14 @@ import { useUserAuth } from '../../context/UserAuthContext';
 
 const IngredientSelector = (props) => {
 	const [selectedIngredients, setSelectedIngredients] = useState([]);
-// UseEffect used to ensure callback function runs when the dependencies are changed
+	// UseEffect used to ensure callback function runs when the dependencies are changed
 	useEffect(() => {
 		const jsonItems = localStorage.getItem('selectedIngredients') || '[]';
 		const items = JSON.parse(jsonItems);
 		setSelectedIngredients(items);
 	}, []);
 
-// functional component that contains checkbox logic
+	// functional component that contains checkbox logic
 	const toggle = (ingredient) => {
 		console.log(ingredient);
 		let updatedIngredients;
@@ -29,7 +29,7 @@ const IngredientSelector = (props) => {
 	};
 	console.log(selectedIngredients);
 
-// checkbox return 
+	// checkbox return
 	return (
 		<div className="checkBoxes">
 			{props.ingredients.map((i) => (

@@ -1,70 +1,57 @@
-# Getting Started with Create React App
+# Nourished
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<p style="margin: 0 auto;">
+<img style="width: 100px; " alt="Font Example Screenshot" src="public/logo_transparent.png">
+</p>
+"Nourished" is a web-based application for users to find recipes based on the ingredients they have at home. This application helps reduce food waste and makes cooking more accessible.
+Elias Khourry, Dominik Michel and Karan Dwivedi have co-created this application. This project was built during week 9 of General Assembly's Software Engineering Immersive Bootcamp. The brief involved creating a web application using a stack / language / library of choice. Students were given freedom to choose a topic / problem they would like to solve with their application.
+<br/>
+<p style="margin: 0 auto;">
+<img style="width: 100%; " alt="Font Example Screenshot" src="public/display.png">
+</p>
 
-## Available Scripts
+## Login
 
-In the project directory, you can run:
+-   Uses firebase Authentication and encryption to protect user password and email.
+-   Google signin function has been implemented as well so the user can sign in directly with their gmail account through a popup menu.
+-   Onced logged in, users can add a name for their account as well as personiliased ingredients.
+    <br/>
 
-### `npm start`
+## Homepage
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+-   Shows a list of recipes on default page load
+-   User can type ingredients in the search bar and add them
+-   The user can select Pantry items, these pantry items are saved in local storage
+    -User can click on 'search for recipes'
+    -A list of recipes are shown in a horizontal scroll list
+-   This search is based on Pantry and ingredients inputs
+    <br/>
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Result page
 
-### `npm test`
+-   Shows a list of recipes the user could make with the exact ingredients inputted
+    -Search can be updated if the user changes ingredients
+    -Instructions on how to cook are displayed once a dish link is clicked
+    -Wine pairings added based on dish
+    <br/>
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Features
 
-### `npm run build`
+1. Sign in (with google sign in included)/Sign out
+2. Create users profile
+   3.Add favourite / most used food to user profile and save
+3. Pantry items are saved in local storage
+4. Add fresh ingredients in user field
+5. Search for Recipes
+    - Search button brings the user on a new page with matching Results/Recipes
+      <br/>
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Tools, Gems and APIs used
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Ruby on rails was the main tool used to create this web application.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+-   FireBase for backend
+-   React for front end
+-   CSS - Done from scratch
+-   APIs: REACT-DOM-ROUTER, Firebase, Bootstrap for alerts
+-   Spoonacular - Nutrition, Recipe, and Food API (edited)
