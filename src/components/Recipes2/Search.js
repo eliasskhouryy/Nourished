@@ -28,7 +28,7 @@ export default function Recipes2() {
 			ranking: '1',
 		},
 		headers: {
-			'X-RapidAPI-Key': '65f1475d55msh8d83be2f52d92f3p15f278jsnc4e28a3274ce',
+			'X-RapidAPI-Key': process.env.REACT_APP_RAPID_API_KEY,
 			'X-RapidAPI-Host': 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com',
 		},
 	};

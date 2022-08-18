@@ -114,7 +114,7 @@ const SearchFormIngredients = (props) => {
 	const [value, setValue] = useState(user ? userIngredients.map((i) => (i.userIdIngredient == user.uid ? i.ingredients + ', ' : '')) : '');
 	const _handleSubmit = (event) => {
 		event.preventDefault();
-		props.onSubmit(value);
+		props.onSubmit(value + (user ? userIngredients.map((i) => (i.userIdIngredient == user.uid ? i.ingredients + ', ' : '')) : ''));
 		setValue('');
 	};
 	return (

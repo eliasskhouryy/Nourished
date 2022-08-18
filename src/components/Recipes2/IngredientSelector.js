@@ -29,8 +29,8 @@ const IngredientSelector = (props) => {
 		<div className="checkBoxes">
 			{props.ingredients.map((i) => (
 				<label>
-					{i}:
 					<input type="checkbox" onChange={() => toggle(i)} checked={selectedIngredients.includes(i)} />
+					{i}
 				</label>
 			))}
 		</div>

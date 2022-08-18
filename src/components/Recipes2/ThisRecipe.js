@@ -42,20 +42,20 @@ export default function ThisRecipe() {
 	}, []);
 
 	return (
-		<div>
+		<div className="body">
 			<Home />
 			{console.log(apiKey)}
 			<div className="result">
 				<h1>{recipe.title}</h1>
 				<img src={recipe.image} />
 
-				<h2>Instructions</h2>
+				<h3>Instructions</h3>
 				<p dangerouslySetInnerHTML={{ __html: recipe.instructions }} />
 
 				<p>
 					{recipe.winePairing ? (
 						<div>
-							<h2>Want to pair with a glass of Wine?</h2>
+							<h3>Want to pair with a glass of Wine?</h3>
 							{recipe.winePairing.pairingText}
 						</div>
 					) : (
