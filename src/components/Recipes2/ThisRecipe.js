@@ -3,11 +3,18 @@ import '../recipe.css';
 import axios from 'axios';
 import SearchResultShow from './SearchResultShow';
 import { useParams } from 'react-router-dom';
+import '../result.css';
+import Home from '../Authentication/Home';
+import { db } from '../../firebase';
+import { collection, getDocs, addDoc, updateDoc, doc } from 'firebase/firestore';
 
 export default function ThisRecipe() {
-    let { id } = useParams();
-    const [recipe, setRecipe] = useState([]);
-console.log(id)
+	let { id } = useParams();
+	const [recipe, setRecipe] = useState([]);
+	const apiKeyRef = collection(db, 'apiKey');
+	const [apiKey, setApiKey] = useState('');
+
+	console.log(id);
 	const options = {
 		method: 'GET',
 		url: `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/${id}/information`,
@@ -26,17 +33,36 @@ console.log(id)
 			.catch(function (error) {
 				console.error(error);
 			});
+
+		const getApiKey = async () => {
+			const data = await getDocs(apiKeyRef);
+			setApiKey(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+		};
+		getApiKey();
 	}, []);
 
-		return (
-				<div>
-					<h1>{recipe.title}</h1>
-					<img src={recipe.image} />
-                    {/* <h2 dangerouslySetInnerHTML={{__html: recipe.instructions}} /> */}
-                    
-				</div>
+	return (
+		<div>
+			<Home />
+			{console.log(apiKey)}
+			<div className="result">
+				<h1>{recipe.title}</h1>
+				<img src={recipe.image} />
 
-		);
+				<h2>Instructions</h2>
+				<p dangerouslySetInnerHTML={{ __html: recipe.instructions }} />
 
-
+				<p>
+					{recipe.winePairing ? (
+						<div>
+							<h2>Want to pair with a glass of Wine?</h2>
+							{recipe.winePairing.pairingText}
+						</div>
+					) : (
+						''
+					)}
+				</p>
+			</div>
+		</div>
+	);
 }

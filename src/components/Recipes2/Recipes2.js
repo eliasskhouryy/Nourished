@@ -1,21 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import RecipeDefaultShow from './RecipeDefaultShow';
 import '../recipe.css';
 import { Link } from 'react-router-dom';
 import AddIngredients from './AddIngredients';
 import Home from '../Authentication/Home';
 import axios from 'axios';
+import { UserAuthContextProvider } from '../../context/UserAuthContext';
 
 export default function Recipes2() {
 	const [recipes, setRecipes] = useState([]);
 	const [recipes1, setRecipes1] = useState([]);
+	const [apiKey, setApiKey] = useState('');
 
 	const options = {
 		method: 'GET',
 		url: 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/findByIngredients',
 		params: {
 			ingredients: 'asian',
-			number: '1',
+			number: '10',
 			ignorePantry: 'true',
 			ranking: '1',
 		},
@@ -29,7 +30,7 @@ export default function Recipes2() {
 		url: 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/findByIngredients',
 		params: {
 			ingredients: 'pasta',
-			number: '1',
+			number: '10',
 			ignorePantry: 'true',
 			ranking: '1',
 		},
@@ -63,13 +64,14 @@ export default function Recipes2() {
 			<h2>{'Pasta'}</h2>
 			<div className="contain">
 				{recipes.map((recipe) => (
-					<RecipeDefaultShow
-						key={recipe.title}
-						title={recipe.title}
-						image={recipe.image}
-						id={recipe.id}
-						link={`https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/${recipe.id}/information`}
-					/>
+					<div className="box">
+						<Link to={`/result/recipe/${recipe.id}`}>
+							<div key={recipe.title}>
+								<h2>{recipe.title}</h2>
+								<img src={recipe.image} />
+							</div>
+						</Link>
+					</div>
 				))}
 			</div>
 			{/* <h1>{'Asian'}</h1>

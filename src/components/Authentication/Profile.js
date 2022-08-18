@@ -58,10 +58,11 @@ export default function Profile() {
 			}
 		}
 		if (output) {
-			return output;
+			return <h1>{output}</h1>;
 		} else {
 			return (
 				<div>
+					<h2>Add your name to your profile</h2>
 					<input type="text" placeholder="name" onChange={(event) => setNewLastName(event.target.value)} />
 					<button onClick={addUserDetail}>Add Name</button>{' '}
 				</div>
@@ -74,7 +75,7 @@ export default function Profile() {
 			<Home />
 			<div className="profile">
 				{/* Hello {user.email} */}
-				{userDetails.map((u) => (u.userId == user.uid ? u.name : ''))}
+				{createNameCheck(user, userDetails, user.uid)}
 				<p>
 					{userDetails.map((user) => {
 						return (
@@ -91,7 +92,7 @@ export default function Profile() {
 			<div>{createNameCheck}</div>
 
 			<div>
-				<h1>Add Default Ingredients from your Pantry</h1>
+				<h2>Add Default Ingredients from your Pantry</h2>
 
 				<input type="text" placeholder="Lettuce" onChange={(event) => setIngredient(event.target.value)} />
 				<button onClick={addIngredient}>Add Ingredient</button>

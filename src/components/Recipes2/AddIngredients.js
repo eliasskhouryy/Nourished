@@ -1,8 +1,13 @@
-import React, { Component, useState } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import SearchResultShow from './SearchResultShow';
 import '../recipe.css';
+import { db } from '../../firebase';
+import '../profile.css';
+import { collection, getDocs, addDoc, updateDoc, doc } from 'firebase/firestore';
+import IngredientSelector from './IngredientSelector';
+import { useUserAuth } from '../../context/UserAuthContext';
 
 class AddIngredients extends Component {
 	constructor() {
@@ -11,56 +16,109 @@ class AddIngredients extends Component {
 		this.state = {
 			UsersIngredients: [],
 			pantryitems: [],
+			AllIngredients: [],
 		};
 		this._updateIngredients = this._updateIngredients.bind(this);
-		// this._updatePantry = this._updatePantry.bind(this)
 	}
 
 	_updateIngredients = (value) => {
-		let updatedIngredients = [];
-		if (this.state.UsersIngredients.includes(value)) {
-			updatedIngredients = this.state.UsersIngredients.filter((i) => i != value);
-		} else {
-			updatedIngredients = [...this.state.UsersIngredients, value];
-		}
-
-		this.setState({ UsersIngredients: updatedIngredients });
+		this.setState({ UsersIngredients: [...this.state.UsersIngredients, value] });
+		this._AllIngredientUpdate([...this.state.UsersIngredients, value], this.state.pantryitems);
 	};
 
-	// _updatePantry = (value) => {
-	//     this.setState({ pantryitems: [...this.state.pantryitems,value] });
-	// };
+	_updatePantry = (value) => {
+		this.setState({ pantryitems: value });
+		this._AllIngredientUpdate(this.state.UsersIngredients, value);
+	};
+
+	_AllIngredientUpdate = (newUsersIngredients, value) => {
+		this.setState({ AllIngredients: [...value, ...newUsersIngredients] });
+	};
 
 	render() {
 		return (
-			<div className="display_Ingredients">
-				<SearchFormIngredients _updateIngredients={this._updateIngredients} onSubmit={this._updateIngredients} ingredients={this.state.UsersIngredients} onClick={this._handleClick} />
+			<div className="mainSearch">
+				<SearchFormIngredients _updateIngredients={this._updateIngredients} onSubmit={this._updateIngredients} ingredients={this.state.AllIngredients} onClick={this._handleClick} />
 				<DisplayIngredients UsersIngredients={this.state.UsersIngredients} />
-				<PantryForm onChange={this._updateIngredients} UsersIngredients={this.state.UsersIngredients} />
+
+				<IngredientSelector
+					ingredients={[
+						'Garlic',
+						'Olive Oil',
+						'Turmeric',
+						'Pasta',
+						'Rice',
+						'Butter',
+						'Salt',
+						'Pepper',
+						'Balsamic',
+						'Ketchup',
+						'Mayonnaise',
+						'Red Chilli',
+						'Olives',
+						'Tomato',
+						'Flour',
+						'Honey',
+						'Eggs',
+						'Potatoes',
+						'Onions',
+						'Lentils',
+					]}
+					onUpdate={this._updatePantry}
+				/>
+				<br />
+				<Link to="/profile">Want to add your own ingredients?</Link>
 			</div>
 		);
 	}
 }
 
 const DisplayIngredients = (props) => {
+	const [userIngredients, setUserIngredient] = useState([]);
+	const { logOut, user } = useUserAuth();
+	const userIngredientsRef = collection(db, 'userIngredients');
+	useEffect(() => {
+		const getUserIngredients = async () => {
+			const data = await getDocs(userIngredientsRef);
+			setUserIngredient(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+		};
+		getUserIngredients();
+	}, []);
 	return (
 		<div className="ingredientsList">
 			<h3>Ingredients</h3>
+			{user ? userIngredients.map((i) => (i.userIdIngredient == user.uid ? i.ingredients + ', ' : '')) : ''}
 			{props.UsersIngredients.map((s) => (
-				<p key={s.toString()}>{s}</p>
+				<p key={s.toString()}>
+					{s.toString()}
+					{props.UsersIngredients.length == 1 ? '' : ','}
+					&nbsp;
+				</p>
 			))}
+			<br></br>
 		</div>
 	);
 };
+
 const SearchFormIngredients = (props) => {
-	const [value, setValue] = useState('');
+	const [userIngredients, setUserIngredient] = useState([]);
+	const { logOut, user } = useUserAuth();
+	const userIngredientsRef = collection(db, 'userIngredients');
+	useEffect(() => {
+		const getUserIngredients = async () => {
+			const data = await getDocs(userIngredientsRef);
+			setUserIngredient(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+		};
+		getUserIngredients();
+	}, []);
+	const [value, setValue] = useState(user ? userIngredients.map((i) => (i.userIdIngredient == user.uid ? i.ingredients + ', ' : '')) : '');
 	const _handleSubmit = (event) => {
 		event.preventDefault();
 		props.onSubmit(value);
 		setValue('');
 	};
 	return (
-		<div className="mainSearch">
+		<div>
 			<h1>Add ingredients</h1>
 
 			<form onSubmit={_handleSubmit}>
@@ -70,40 +128,6 @@ const SearchFormIngredients = (props) => {
 			<Link to={`/results/${props.ingredients.join(',')}`}>
 				<input type="button" value="Search Recipes" className="filterButton" />
 			</Link>
-		</div>
-	);
-};
-
-const PantryForm = (props) => {
-	console.log(props);
-	const [garlic, setFirst] = useState(true);
-	const [oliveoil, setSecond] = useState(true);
-	const handleChange = (data) => {
-		//     if(garlic === true){
-		//     console.log(data)
-		//     props.onChange(data)
-		// }
-		if (data === 'garlic') {
-			setFirst(!garlic);
-		}
-
-		// if(oliveoil === true ){
-		// 	console.log(data)
-		// 	props.onChange(data)
-		// }
-
-		if (data === 'oliveoil') {
-			setSecond(!oliveoil);
-		}
-		props.onChange(data);
-	};
-
-	return (
-		<div className="pantryform">
-			<h2>Your Pantry</h2>
-			<input onChange={() => handleChange('garlic')} type="checkbox" value={garlic} /> Garlic
-			<input onChange={() => handleChange('oliveoil')} type="checkbox" value={oliveoil} /> Olive Oil
-			{/* <p>Pantryitems: {props.UsersIngredients.length}</p> */}
 		</div>
 	);
 };

@@ -1,0 +1,25 @@
+* {
+	box-sizing: border-box;
+}
+
+.result {
+	max-width: 760px;
+	margin: none;
+	margin: 0 auto;
+	padding: 0 30px 30px 30px;
+}
+
+.result h1 {
+	padding: 10px;
+	padding-top: 30px;
+}
+
+.result img {
+	width: 50%;
+	box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+	border-radius: 5px;
+}
+
+.results h2 {
+	text-align: left;
+}

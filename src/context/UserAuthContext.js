@@ -1,11 +1,15 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import { auth } from '../firebase';
+import { collection, getDocs, addDoc, updateDoc, doc } from 'firebase/firestore';
+import { db } from '../firebase';
 
 const userAuthContext = createContext();
 
 export function UserAuthContextProvider({ children }) {
 	const [user, setUser] = useState({});
+	const apiKeyRef = collection(db, 'apiKey');
+	const [apiKey, setApiKey] = useState('');
 
 	function logIn(email, password) {
 		return signInWithEmailAndPassword(auth, email, password);
@@ -29,6 +33,12 @@ export function UserAuthContextProvider({ children }) {
 			setUser(currentuser);
 		});
 
+		const getApiKey = async () => {
+			const data = await getDocs(apiKeyRef);
+			setApiKey(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+		};
+		getApiKey();
+		// apiKey.map((k) => k.key) CHECK TOMORROW WITH JOEL
 		return () => {
 			unsubscribe();
 		};

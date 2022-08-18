@@ -51,7 +51,7 @@ const Home = () => {
 		<nav>
 			<div className="navLeft">
 				<Link to="/">
-					<img src="./logo_transparent.png" alt="" />
+					<img src="/logo_transparent.png" alt="" />
 				</Link>
 			</div>
 
