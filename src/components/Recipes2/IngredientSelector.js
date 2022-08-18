@@ -1,8 +1,14 @@
-import { React, useState } from 'react';
+import { React, useState, useEffect } from 'react';
 import '../recipe.css';
 
 const IngredientSelector = (props) => {
 	const [selectedIngredients, setSelectedIngredients] = useState([]);
+
+	useEffect(() => {
+		const jsonItems = localStorage.getItem('selectedIngredients') || '[]';
+		const items = JSON.parse(jsonItems);
+		setSelectedIngredients(items);
+	}, []);
 
 	const toggle = (ingredient) => {
 		console.log(ingredient);
@@ -13,8 +19,11 @@ const IngredientSelector = (props) => {
 			updatedIngredients = [...selectedIngredients, ingredient];
 		}
 		setSelectedIngredients(updatedIngredients);
+		localStorage.setItem('selectedIngredients', JSON.stringify(updatedIngredients));
+
 		props.onUpdate(updatedIngredients);
 	};
+	console.log(selectedIngredients);
 
 	return (
 		<div className="checkBoxes">
