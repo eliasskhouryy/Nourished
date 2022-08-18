@@ -10,14 +10,16 @@ import { collection, getDocs, addDoc, updateDoc, doc } from 'firebase/firestore'
 import IngredientSelector from './IngredientSelector';
 import { useUserAuth } from '../../context/UserAuthContext';
 
+const jsonIngredients = (localStorage.getItem('selectedIngredients')) ; //getting values of locally stored ingredients
+const jsonUpdatedIngredients = JSON.parse(jsonIngredients.replace(/\\/g, "")) // converting from JSON format to a regular string in an array
+
 class AddIngredients extends Component {
 	constructor() {
 		super();
-
 		this.state = {
 			UsersIngredients: [],
-			pantryitems: [],
-			AllIngredients: [],
+			pantryitems: [jsonUpdatedIngredients], // State on page load
+			AllIngredients: []
 		};
 		this._updateIngredients = this._updateIngredients.bind(this);
 	}
@@ -35,11 +37,8 @@ class AddIngredients extends Component {
 	_AllIngredientUpdate = (newUsersIngredients, value) => {
 		this.setState({ AllIngredients: [...value, ...newUsersIngredients] });
 	};
-
-	// useEffect((items) => {
-	// 	this.state.AllIngredients(items)
-	// 	},[]);
-	render() {
+	
+		render() {
 		return (
 			<div className="mainSearch">
 				<SearchFormIngredients _updateIngredients={this._updateIngredients} onSubmit={this._updateIngredients} ingredients={this.state.AllIngredients} onClick={this._handleClick} />
