@@ -1,8 +1,6 @@
 import React, { Component, useEffect, useState } from 'react';
 
 import { Link } from 'react-router-dom';
-import axios from 'axios';
-import SearchResultShow from './SearchResultShow';
 import '../recipe.css';
 import { db } from '../../firebase';
 import '../profile.css';
@@ -12,7 +10,7 @@ import { useUserAuth } from '../../context/UserAuthContext';
 import { uid } from 'browser-router/html5-history/adapter';
 
 const jsonIngredients = localStorage.getItem('selectedIngredients'); //getting values of locally stored ingredients
-const jsonUpdatedIngredients = JSON.parse(jsonIngredients.replace(/\\/g, '')); // converting from JSON format to a regular string in an array
+const jsonUpdatedIngredients = JSON.parse(jsonIngredients); // converting from JSON format to a regular string in an array
 
 class AddIngredients extends Component {
 	constructor() {
@@ -72,7 +70,6 @@ class AddIngredients extends Component {
 					onUpdate={this._updatePantry}
 				/>
 				<br />
-				<Link to="/profile">Want to add your own ingredients?</Link>
 			</div>
 		);
 	}
@@ -95,8 +92,6 @@ const DisplayIngredients = (props) => {
 		<div className="ingredientsList">
 			<h3>Ingredients</h3>
 
-			{ing}
-
 			{props.UsersIngredients.map((s) => (
 				<p key={s.toString()}>
 					{s.toString()}
@@ -110,23 +105,10 @@ const DisplayIngredients = (props) => {
 };
 
 const SearchFormIngredients = (props) => {
-	const [userIngredients, setUserIngredient] = useState([]);
-	const { logOut, user } = useUserAuth();
-	const userIngredientsRef = collection(db, 'userIngredients');
 	const [value, setValue] = useState('');
-
-	useEffect(() => {
-		const getUserIngredients = async () => {
-			const data = await getDocs(userIngredientsRef);
-			setUserIngredient(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-		};
-		getUserIngredients();
-	}, []);
-	let ing = user ? userIngredients.map((i) => (i.userIdIngredient == user.uid ? i.ingredients + value : '')) : '';
 
 	const _handleSubmit = (event) => {
 		event.preventDefault();
-
 		props.onSubmit(value);
 		setValue('');
 	};
